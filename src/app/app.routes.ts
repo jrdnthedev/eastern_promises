@@ -18,7 +18,7 @@ export const routes: Routes = [
     component: InvoicesComponent,
   },
   {
-    path: ' revenue',
+    path: 'revenue',
     component: RevenueComponent,
   },
 ];
