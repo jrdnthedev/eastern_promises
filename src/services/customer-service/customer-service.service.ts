@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Customer } from '../../types/types';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable, ReplaySubject, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -11,15 +11,18 @@ export class CustomerServiceService {
   private backendUrl = 'http://localhost:3000';
   private customerSubject = new BehaviorSubject<Customer[]>([]);
   customer$ = this.customerSubject.asObservable();
+  private latestCustomers = new ReplaySubject<Customer[]>(3);
+  latestCustomers$ = this.latestCustomers.asObservable();
 
   constructor() {}
 
   getCustomers(): void {
     this.http
       .get<Customer[]>(`${this.backendUrl}/customers`)
-      .subscribe((customers: Customer[]) =>
-        this.customerSubject.next(customers)
-      );
+      .subscribe((customers: Customer[]) => {
+        this.customerSubject.next(customers);
+        this.latestCustomers.next(customers.slice(-3));
+      });
   }
 
   editCustomer(customer: Customer): Observable<Customer> {

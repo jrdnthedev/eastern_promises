@@ -1,5 +1,9 @@
 <div class="grid grid-cols-2 gap-4">
-  <app-card-list title="Latest Customers" btnText="View all">
+  <app-card-list
+    title="Latest Customers"
+    btnText="View all"
+    pageLink="/customers"
+  >
     @for(custy of customers$ | async; track $index) {
     <li class="py-3 sm:py-4">
       <div class="flex items-center">
@@ -27,7 +31,11 @@
     </li>
     }
   </app-card-list>
-  <app-card-list title="Latest Invoices" btnText="View all">
+  <app-card-list
+    title="Latest Invoices"
+    btnText="View all"
+    pageLink="/invoices"
+  >
     @for(rev of revenue$ | async; track $index) {
     <li class="py-3 sm:py-4">
       <div class="flex items-center">

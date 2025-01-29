@@ -14,8 +14,8 @@ import { CommonModule } from '@angular/common';
 export class DashboardComponent {
   private customerService = inject(CustomerServiceService);
   private revenueService = inject(RevenueService);
-  customers$ = this.customerService.customer$;
-  revenue$ = this.revenueService.revenue$;
+  customers$ = this.customerService.latestCustomers$;
+  revenue$ = this.revenueService.latestRevenue$;
 
   ngOnInit() {
     this.customerService.getCustomers();
