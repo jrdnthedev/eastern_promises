@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Customer } from '../../types/types';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -9,16 +9,22 @@ import { Observable } from 'rxjs';
 export class CustomerServiceService {
   private http = inject(HttpClient);
   private backendUrl = 'http://localhost:3000';
+  private customerSubject = new BehaviorSubject<Customer[]>([]);
+  customer$ = this.customerSubject.asObservable();
+
   constructor() {}
 
-  getCustomers(): Observable<Customer[]> {
-    return this.http.get<Customer[]>(`${this.backendUrl}/customers`);
+  getCustomers(): void {
+    this.http
+      .get<Customer[]>(`${this.backendUrl}/customers`)
+      .subscribe((customers: Customer[]) =>
+        this.customerSubject.next(customers)
+      );
   }
 
   editCustomer(customer: Customer): Observable<Customer> {
-    return this.http.put<Customer>(
-      `${this.backendUrl}/customers/${customer.id}`,
-      customer
-    );
+    return this.http
+      .put<Customer>(`${this.backendUrl}/customers/${customer.id}`, customer)
+      .pipe(tap(() => this.getCustomers()));
   }
 }

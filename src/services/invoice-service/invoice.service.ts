@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Invoice } from '../../types/types';
 
 @Injectable({
@@ -9,10 +9,14 @@ import { Invoice } from '../../types/types';
 export class InvoiceService {
   private http = inject(HttpClient);
   private backendUrl = 'http://localhost:3000';
+  private invoiceSubject = new BehaviorSubject<Invoice[]>([]);
+  invoice$ = this.invoiceSubject.asObservable();
 
   constructor() {}
 
-  getInvoices(): Observable<Invoice[]> {
-    return this.http.get<Invoice[]>(`${this.backendUrl}/invoices`);
+  getInvoices(): void {
+    this.http
+      .get<Invoice[]>(`${this.backendUrl}/invoices`)
+      .subscribe((invoices: Invoice[]) => this.invoiceSubject.next(invoices));
   }
 }

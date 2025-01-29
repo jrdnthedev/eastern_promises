@@ -1,6 +1,6 @@
 <div class="grid grid-cols-2 gap-4">
   <app-card-list title="Latest Customers" btnText="View all">
-    @for(custy of customers; track $index) {
+    @for(custy of customers$ | async; track $index) {
     <li class="py-3 sm:py-4">
       <div class="flex items-center">
         <div class="shrink-0">
@@ -28,16 +28,13 @@
     }
   </app-card-list>
   <app-card-list title="Latest Invoices" btnText="View all">
-    @for(rev of revenue; track $index) {
+    @for(rev of revenue$ | async; track $index) {
     <li class="py-3 sm:py-4">
       <div class="flex items-center">
         <div class="flex-1 min-w-0 ms-4">
           <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
             {{ rev.month }}
           </p>
-          <!-- <p class="text-sm text-gray-500 truncate dark:text-gray-400">
-                {{ custy.email }}
-              </p> -->
         </div>
         <div
           class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white"

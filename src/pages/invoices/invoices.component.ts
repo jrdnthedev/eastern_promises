@@ -13,11 +13,9 @@ import { TableComponent } from '../../components/table/table.component';
 })
 export class InvoicesComponent {
   private invoiceService = inject(InvoiceService);
-  invoices: Invoice[] = [];
+  invoices$ = this.invoiceService.invoice$;
 
   ngOnInit() {
-    this.invoiceService.getInvoices().subscribe((invoices) => {
-      this.invoices = invoices;
-    });
+    this.invoiceService.getInvoices();
   }
 }
