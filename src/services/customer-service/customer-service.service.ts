@@ -14,4 +14,11 @@ export class CustomerServiceService {
   getCustomers(): Observable<Customer[]> {
     return this.http.get<Customer[]>(`${this.backendUrl}/customers`);
   }
+
+  editCustomer(customer: Customer): Observable<Customer> {
+    return this.http.put<Customer>(
+      `${this.backendUrl}/customers/${customer.id}`,
+      customer
+    );
+  }
 }

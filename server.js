@@ -160,8 +160,26 @@ app.use(cors(corsOptions));
 app.use('/customers', express.static(path.join(__dirname, 'public/customers')));
 
 app.get('/customers', (req, res) => {
-    res.send(customers);
     res.status(201).json(customers);
+});
+
+app.put('/customers/:id', (req, res) => {
+    const customerId = req.params.id;
+    const updatedCustomer = req.body;
+
+    const customerIndex = customers.findIndex((c) => c.id === customerId);
+
+    if (customerIndex === -1) {
+        return res.status(404).json({ message: 'Customer not found' });
+    }
+
+    // Update the existing customer data
+    customers[customerIndex] = { ...customers[customerIndex], ...updatedCustomer };
+
+    res.status(200).json({
+        message: 'Customer updated successfully',
+        customer: customers[customerIndex],
+    });
 });
 
 app.get('/invoices', (req, res) => {
