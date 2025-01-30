@@ -182,6 +182,17 @@ app.put('/customers/:id', (req, res) => {
     });
 });
 
+app.post('/customers', (req, res) => {
+    const newCustomer = req.body;
+
+    customers.push(newCustomer);
+
+    res.status(201).json({
+        message: 'Customer added successfully',
+        customer: newCustomer,
+    });
+});
+
 app.get('/invoices', (req, res) => {
     res.send(invoices);
     res.status(201).json(invoices);

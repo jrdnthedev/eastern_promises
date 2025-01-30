@@ -4,22 +4,22 @@
     btnText="View all"
     pageLink="/customers"
   >
-    @for(custy of customers$ | async; track $index) {
+    @for(customer of customers$ | async; track $index) {
     <li class="py-3 sm:py-4">
       <div class="flex items-center">
         <div class="shrink-0">
           <img
             class="w-8 h-8 rounded-full"
-            [src]="custy.image_url"
-            [alt]="custy.name"
+            [src]="customer.image_url"
+            [alt]="customer.name"
           />
         </div>
         <div class="flex-1 min-w-0 ms-4">
           <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
-            {{ custy.name }}
+            {{ customer.name }}
           </p>
           <p class="text-sm text-gray-500 truncate dark:text-gray-400">
-            {{ custy.email }}
+            {{ customer.email }}
           </p>
         </div>
         <div

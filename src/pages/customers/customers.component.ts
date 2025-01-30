@@ -10,6 +10,7 @@ import { CustomerServiceService } from '../../services/customer-service/customer
 import { Customer } from '../../types/types';
 import { EditModalComponent } from '../../components/edit-modal/edit-modal.component';
 import { CommonModule } from '@angular/common';
+import { AddModalComponent } from '../../components/add-modal/add-modal.component';
 
 @Component({
   selector: 'app-customers',
@@ -21,20 +22,41 @@ import { CommonModule } from '@angular/common';
 export class CustomersComponent {
   private customerService = inject(CustomerServiceService);
   customers$ = this.customerService.customer$;
-  @ViewChild('dynamicContainer', { read: ViewContainerRef, static: true })
-  container!: ViewContainerRef;
+  @ViewChild('dynamicEditModalContainer', {
+    read: ViewContainerRef,
+    static: true,
+  })
+  editModalContainer!: ViewContainerRef;
+
+  @ViewChild('dynamicAddCustomerModalContainer', {
+    read: ViewContainerRef,
+    static: true,
+  })
+  addCustomerModalContainer!: ViewContainerRef;
   componentRef?: ComponentRef<EditModalComponent>;
+  addcomponentRef?: ComponentRef<AddModalComponent>;
 
   ngOnInit() {
     this.customerService.getCustomers();
   }
 
+  createCustomer() {
+    this.addCustomerModalContainer.clear();
+    this.addcomponentRef =
+      this.addCustomerModalContainer.createComponent(AddModalComponent);
+    this.addcomponentRef.instance.destroy.subscribe(() => {
+      this.addCustomerModalContainer.clear();
+      this.closeModal();
+    });
+  }
+
   editCustomer(customer: Customer) {
-    this.container.clear();
-    this.componentRef = this.container.createComponent(EditModalComponent);
+    this.editModalContainer.clear();
+    this.componentRef =
+      this.editModalContainer.createComponent(EditModalComponent);
     this.componentRef.instance.customer = customer;
     this.componentRef.instance.destroy.subscribe(() => {
-      this.container.clear();
+      this.editModalContainer.clear();
       this.closeModal();
     });
   }

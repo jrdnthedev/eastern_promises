@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Customer } from '../../types/types';
-import { BehaviorSubject, Observable, ReplaySubject, tap } from 'rxjs';
+import { BehaviorSubject, Observable, ReplaySubject, scan, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -11,9 +11,9 @@ export class CustomerServiceService {
   private backendUrl = 'http://localhost:3000';
   private customerSubject = new BehaviorSubject<Customer[]>([]);
   customer$ = this.customerSubject.asObservable();
-  private latestCustomers = new ReplaySubject<Customer[]>(3);
+  private latestCustomers = new ReplaySubject<Customer[]>(1);
   latestCustomers$ = this.latestCustomers.asObservable();
-
+  private lastCustomers: Customer[] = [];
   constructor() {}
 
   getCustomers(): void {
@@ -21,7 +21,8 @@ export class CustomerServiceService {
       .get<Customer[]>(`${this.backendUrl}/customers`)
       .subscribe((customers: Customer[]) => {
         this.customerSubject.next(customers);
-        this.latestCustomers.next(customers.slice(-3));
+        const lastThree = customers.slice(-3);
+        this.latestCustomers.next(lastThree);
       });
   }
 
@@ -29,5 +30,14 @@ export class CustomerServiceService {
     return this.http
       .put<Customer>(`${this.backendUrl}/customers/${customer.id}`, customer)
       .pipe(tap(() => this.getCustomers()));
+  }
+
+  createCustomer(customer: Customer): void {
+    this.http
+      .post<Customer>(`${this.backendUrl}/customers`, customer)
+      .subscribe((newcustomer) => {
+        this.lastCustomers = [...this.lastCustomers, newcustomer].slice(-3);
+        this.latestCustomers.next(this.lastCustomers);
+      });
   }
 }
