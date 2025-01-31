@@ -61,78 +61,91 @@ const users = [
   
   const invoices = [
     {
+      id: 'd6e15627-9fe1-4961-8c5b-ea44a9bd81aa',
       customer_id: customers[0].id,
       amount: 15795,
       status: 'pending',
       date: '2022-12-06',
     },
     {
+      id: '3958dc3e-712f-4377-85e9-fec4b6a6442a',
       customer_id: customers[1].id,
       amount: 20348,
       status: 'pending',
       date: '2022-11-14',
     },
     {
+      id: '3958dc9e-142f-4377-85e9-fec4b6a6442a',
       customer_id: customers[4].id,
       amount: 3040,
       status: 'paid',
       date: '2022-10-29',
     },
     {
+      id: '76d25c26-f784-44a2-kc19-586678f7c2f2',
       customer_id: customers[3].id,
       amount: 44800,
       status: 'paid',
       date: '2023-09-10',
     },
     {
+      id: 'CC24C14A-0ACF-4F4A-A6C1-D45682C144B9',
       customer_id: customers[5].id,
       amount: 34577,
       status: 'pending',
       date: '2023-08-05',
     },
     {
+      id: '76d25c26-f784-44a2-kc19-586678fxc2b2',
       customer_id: customers[2].id,
       amount: 54246,
       status: 'pending',
       date: '2023-07-16',
     },
     {
+      id: '13D07535-C52E-4157-A011-F1D2EF4E8CBB',
       customer_id: customers[0].id,
       amount: 666,
       status: 'pending',
       date: '2023-06-27',
     },
     {
+      id: '13E07535-C59E-4157-A911-F8D2EF4E0CBB',
       customer_id: customers[3].id,
       amount: 32545,
       status: 'paid',
       date: '2023-06-09',
     },
     {
+      id: '13D47930-G59E-9154-A011-F8D2EX4E0CBB',
       customer_id: customers[4].id,
       amount: 1250,
       status: 'paid',
       date: '2023-06-17',
     },
     {
+      id: '13D07536-C59E-4157-A061-F8D2EF4E0CBB',
       customer_id: customers[5].id,
       amount: 8546,
       status: 'paid',
       date: '2023-06-07',
     },
     {
+      id: '13T07535-H59E-4157-A011-F8D2EF4E0CBB',
       customer_id: customers[1].id,
       amount: 500,
       status: 'paid',
       date: '2023-08-19',
     },
     {
+      id: '13T07535-H29E-7357-A011-F8D2EF4E0MMB',
       customer_id: customers[5].id,
       amount: 8945,
       status: 'paid',
       date: '2023-06-03',
     },
     {
+      id: '13T07839-BH59E-4157-A011-F8D2EF4E0CGG',
       customer_id: customers[2].id,
       amount: 1000,
       status: 'paid',
@@ -191,6 +204,35 @@ app.post('/customers', (req, res) => {
         message: 'Customer added successfully',
         customer: newCustomer,
     });
+});
+
+app.post('/invoices', (req,res) => {
+  const newInvoice = req.body;
+
+  invoices.push(newInvoice);
+
+  res.status(201).json({
+    message: 'Invoice added successfully',
+    invoice: newInvoice,
+  });
+});
+
+app.put('/invoices/:id', (req, res) => {
+  const invoiceID = req.params.id;
+  const updatedInvoice = req.body;
+
+  const invoiceIndex = invoices.findIndex((i) => i.id === invoiceID);
+
+  if (invoiceIndex === -1) {
+    return res.status(404).json({ message: 'Invoice not found' });
+  }
+
+  invoices[invoiceIndex] = { ...invoices[invoiceIndex], ...updatedInvoice };
+
+  res.status(200).json({
+    message: 'Invoice updated successfully',
+    invoice: invoices[invoiceIndex],
+  });
 });
 
 app.get('/invoices', (req, res) => {

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, ReplaySubject } from 'rxjs';
+import { BehaviorSubject, Observable, ReplaySubject, tap } from 'rxjs';
 import { Invoice } from '../../types/types';
 
 @Injectable({
@@ -22,5 +22,22 @@ export class InvoiceService {
         this.invoiceSubject.next(invoices);
         this.latestInvoices.next(invoices.slice(-3));
       });
+  }
+
+  editInvoice(invoice: Invoice): Observable<Invoice> {
+    return this.http
+      .put<Invoice>(`${this.backendUrl}/invoices/${invoice.id}`, invoice)
+      .pipe(
+        tap(() => {
+          console.log('Invoice updated', invoice);
+          this.getInvoices();
+        })
+      );
+  }
+
+  createInvoice(invoice: Invoice): void {
+    this.http
+      .post<Invoice>(`${this.backendUrl}/invoices`, invoice)
+      .pipe(tap(() => this.getInvoices()));
   }
 }

@@ -23,13 +23,17 @@
       <td class="px-6 py-4">{{ invoice.date }}</td>
       <td class="px-6 py-4">{{ invoice.amount | currency }}</td>
       <td class="px-6 py-4">
-        <a
-          href="#"
+        <button
+          (click)="editInvoice(invoice)"
           class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-          >Edit</a
         >
+          Edit
+        </button>
       </td>
     </tr>
     }
   </ng-container>
 </app-table>
+
+<ng-container #dynamicEditModalContainer></ng-container>
+<ng-container #dynamicAddInvoiceModalContainer></ng-container>

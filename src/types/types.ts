@@ -6,7 +6,8 @@ export type Customer = {
 };
 
 export type Invoice = {
-  status: string;
+  id: string;
+  status: InvoiceStatus;
   customer_id: number;
   date: string;
   amount: number;
@@ -16,3 +17,5 @@ export type Revenue = {
   month: string;
   revenue: number;
 };
+
+export type InvoiceStatus = 'paid' | 'pending' | 'draft';
