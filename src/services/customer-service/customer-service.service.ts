@@ -13,7 +13,6 @@ export class CustomerServiceService {
   customer$ = this.customerSubject.asObservable();
   private latestCustomers = new ReplaySubject<Customer[]>(1);
   latestCustomers$ = this.latestCustomers.asObservable();
-  private lastCustomers: Customer[] = [];
   constructor() {}
 
   getCustomers(): void {
@@ -21,8 +20,7 @@ export class CustomerServiceService {
       .get<Customer[]>(`${this.backendUrl}/customers`)
       .subscribe((customers: Customer[]) => {
         this.customerSubject.next(customers);
-        const lastThree = customers.slice(-3);
-        this.latestCustomers.next(lastThree);
+        this.latestCustomers.next(customers.slice(-3));
       });
   }
 
@@ -35,9 +33,6 @@ export class CustomerServiceService {
   createCustomer(customer: Customer): void {
     this.http
       .post<Customer>(`${this.backendUrl}/customers`, customer)
-      .subscribe((newcustomer) => {
-        this.lastCustomers = [...this.lastCustomers, newcustomer].slice(-3);
-        this.latestCustomers.next(this.lastCustomers);
-      });
+      .pipe(tap(() => this.getCustomers()));
   }
 }

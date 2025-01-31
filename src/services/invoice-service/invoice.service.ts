@@ -11,7 +11,7 @@ export class InvoiceService {
   private backendUrl = 'http://localhost:3000';
   private invoiceSubject = new BehaviorSubject<Invoice[]>([]);
   invoice$ = this.invoiceSubject.asObservable();
-  private latestInvoices = new ReplaySubject<Invoice[]>(3);
+  private latestInvoices = new ReplaySubject<Invoice[]>(1);
   latestInvoices$ = this.latestInvoices.asObservable();
   constructor() {}
 
