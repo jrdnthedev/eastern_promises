@@ -21,7 +21,6 @@ export class EditInvoiceModalComponent {
   @Output() destroy = new EventEmitter<void>();
   updatedInvoice!: FormGroup;
   invoiceStatus: InvoiceStatus[] = ['paid', 'pending', 'draft'];
-  statusControl!: FormControl;
   invoiceService = inject(InvoiceService);
 
   ngOnInit() {
@@ -31,8 +30,8 @@ export class EditInvoiceModalComponent {
         Validators.required
       ),
       amount: new FormControl(this.invoice.amount, Validators.required),
+      status: new FormControl(this.invoice.status),
     });
-    this.statusControl = new FormControl(this.invoice.status);
   }
 
   closeModal() {
@@ -43,7 +42,6 @@ export class EditInvoiceModalComponent {
     const updatedInvoice = {
       ...this.updatedInvoice.value,
       id: this.invoice.id,
-      status: this.statusControl.value,
     };
     console.log(updatedInvoice);
     this.invoiceService.editInvoice(updatedInvoice).subscribe();

@@ -12,6 +12,7 @@ import { TableComponent } from '../../components/table/table.component';
 import { AddInvoiceModalComponent } from './components/add-invoice-modal/add-invoice-modal.component';
 import { EditInvoiceModalComponent } from './components/edit-invoice-modal/edit-invoice-modal.component';
 import { PaginationComponent } from '../../components/pagination/pagination.component';
+import { map, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-invoices',
@@ -40,7 +41,7 @@ export class InvoicesComponent {
   currentPage = 1;
   itemsPerPage = 10;
   totalItems = 0;
-  paginatedItems: Invoice[] = [];
+  paginatedItems$: Observable<Invoice[]> = new Observable<Invoice[]>();
 
   ngOnInit() {
     this.invoiceService.getInvoices();
@@ -64,11 +65,28 @@ export class InvoicesComponent {
   }
 
   updatePaginatedItems() {
-    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-    const endIndex = startIndex + this.itemsPerPage;
+    this.paginatedItems$ = this.invoices$.pipe(
+      map((items) => {
+        const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+        const endIndex = startIndex + this.itemsPerPage;
+        this.totalItems = items.length;
+        return items.slice(startIndex, endIndex);
+      })
+    );
+  }
+  createInvoice() {
+    this.addInvoiceModalContainer.clear();
+    this.addcomponentRef = this.addInvoiceModalContainer.createComponent(
+      AddInvoiceModalComponent
+    );
     this.invoices$.subscribe((item) => {
-      this.totalItems = item.length;
-      this.paginatedItems = item.slice(startIndex, endIndex);
+      this.addcomponentRef
+        ? (this.addcomponentRef.instance.invoices = item)
+        : null;
+    });
+    this.addcomponentRef.instance.destroy.subscribe(() => {
+      this.addInvoiceModalContainer.clear();
+      this.closeModal();
     });
   }
 
