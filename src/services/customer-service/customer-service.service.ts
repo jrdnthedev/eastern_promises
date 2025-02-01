@@ -24,15 +24,17 @@ export class CustomerServiceService {
       });
   }
 
-  editCustomer(customer: Customer): Observable<Customer> {
-    return this.http
+  editCustomer(customer: Customer): void {
+    this.http
       .put<Customer>(`${this.backendUrl}/customers/${customer.id}`, customer)
-      .pipe(tap(() => this.getCustomers()));
+      .pipe(tap(() => this.getCustomers()))
+      .subscribe();
   }
 
   createCustomer(customer: Customer): void {
     this.http
       .post<Customer>(`${this.backendUrl}/customers`, customer)
-      .pipe(tap(() => this.getCustomers()));
+      .pipe(tap(() => this.getCustomers()))
+      .subscribe();
   }
 }

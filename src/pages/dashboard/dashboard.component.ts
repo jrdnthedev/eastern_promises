@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { CustomerServiceService } from '../../services/customer-service/customer-service.service';
 import { CardListComponent } from '../../components/card-list/card-list.component';
-import { RevenueService } from '../../services/revenue-service/revenue.service';
 import { CommonModule } from '@angular/common';
+import { InvoiceService } from '../../services/invoice-service/invoice.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,12 +13,12 @@ import { CommonModule } from '@angular/common';
 })
 export class DashboardComponent {
   private customerService = inject(CustomerServiceService);
-  private revenueService = inject(RevenueService);
+  private invoiceService = inject(InvoiceService);
   customers$ = this.customerService.latestCustomers$;
-  revenue$ = this.revenueService.latestRevenue$;
+  invoices$ = this.invoiceService.latestInvoices$;
 
   ngOnInit() {
     this.customerService.getCustomers();
-    this.revenueService.getRevenue();
+    this.invoiceService.getInvoices();
   }
 }

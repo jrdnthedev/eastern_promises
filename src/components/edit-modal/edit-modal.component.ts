@@ -40,7 +40,7 @@ export class EditModalComponent {
       name: this.updatedCustomer.value.name,
       email: this.updatedCustomer.value.email,
     };
-    this.customerService.editCustomer(customer).subscribe();
+    this.customerService.editCustomer(customer);
     this.closeModal();
   }
 }

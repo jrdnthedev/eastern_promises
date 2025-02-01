@@ -14,7 +14,7 @@
             [alt]="customer.name"
           />
         </div>
-        <div class="flex-1 min-w-0 ms-4">
+        <div class="flex-1 min-w-0 me-4">
           <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
             {{ customer.name }}
           </p>
@@ -36,18 +36,21 @@
     btnText="View all"
     pageLink="/invoices"
   >
-    @for(rev of revenue$ | async; track $index) {
+    @for(invoice of invoices$ | async; track $index) {
     <li class="py-3 sm:py-4">
       <div class="flex items-center">
-        <div class="flex-1 min-w-0 ms-4">
+        <div class="flex-1 min-w-0 me-4">
           <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
-            {{ rev.month }}
+            {{ invoice.date }}
+          </p>
+          <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+            {{ invoice.status }}
           </p>
         </div>
         <div
           class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white"
         >
-          {{ rev.revenue | currency }}
+          {{ invoice.amount | currency }}
         </div>
       </div>
     </li>
