@@ -9,6 +9,7 @@ import {
 } from '@angular/forms';
 import { Customer } from '../../../../types/types';
 import { CustomerServiceService } from '../../../../services/customer-service/customer-service.service';
+import { UtilService } from '../../../../services/util-service/util.service';
 
 @Component({
   selector: 'app-add-modal',
@@ -21,7 +22,7 @@ export class AddModalComponent {
   @Output() destroy = new EventEmitter<void>();
   createCustomerGroup!: FormGroup;
   customerService = inject(CustomerServiceService);
-
+  utilService = inject(UtilService);
   ngOnInit() {
     this.createCustomerGroup = new FormGroup({
       name: new FormControl('', [Validators.required]),
@@ -29,18 +30,10 @@ export class AddModalComponent {
     });
   }
 
-  generateUUID(): string {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
-      const r = (Math.random() * 16) | 0;
-      const v = c === 'x' ? r : (r & 0x3) | 0x8;
-      return v.toString(16);
-    });
-  }
-
   createCustomer() {
     if (this.createCustomerGroup.valid) {
       const customer: Customer = {
-        id: this.generateUUID(),
+        id: this.utilService.generateUUID(),
         name: this.createCustomerGroup.value.name,
         email: this.createCustomerGroup.value.email,
         image_url: '',

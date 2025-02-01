@@ -38,6 +38,7 @@ export class InvoiceService {
   createInvoice(invoice: Invoice): void {
     this.http
       .post<Invoice>(`${this.backendUrl}/invoices`, invoice)
-      .pipe(tap(() => this.getInvoices()));
+      .pipe(tap(() => this.getInvoices()))
+      .subscribe();
   }
 }

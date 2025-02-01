@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -7,6 +7,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { Invoice, InvoiceStatus } from '../../../../types/types';
+import { InvoiceService } from '../../../../services/invoice-service/invoice.service';
+import { UtilService } from '../../../../services/util-service/util.service';
 
 @Component({
   selector: 'app-add-invoice-modal',
@@ -18,6 +20,8 @@ import { Invoice, InvoiceStatus } from '../../../../types/types';
 export class AddInvoiceModalComponent {
   @Output() destroy = new EventEmitter<void>();
   @Input() invoices!: Invoice[];
+  invoiceService = inject(InvoiceService);
+  utilService = inject(UtilService);
   invoiceGroup!: FormGroup;
   invoiceStatus: InvoiceStatus[] = ['paid', 'pending', 'draft'];
 
@@ -25,14 +29,21 @@ export class AddInvoiceModalComponent {
     this.invoiceGroup = new FormGroup({
       amount: new FormControl('', [Validators.required]),
       status: new FormControl(this.invoiceStatus[0], [Validators.required]),
-      customerId: new FormControl(this.invoices[0].customer_id, [
+      customer_id: new FormControl(this.invoices[0].customer_id, [
         Validators.required,
       ]),
     });
   }
 
   createInvoice() {
-    console.log('Create invoice', this.invoiceGroup.value);
+    if (this.invoiceGroup.valid) {
+      const invoice: Invoice = {
+        ...this.invoiceGroup.value,
+        date: new Date().toISOString().split('T')[0],
+        id: this.utilService.generateUUID(),
+      };
+      this.invoiceService.createInvoice(invoice);
+    }
     this.destroy.emit();
   }
 
