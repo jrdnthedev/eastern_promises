@@ -7,10 +7,10 @@ import {
 } from '@angular/core';
 import { TableComponent } from '../../components/table/table.component';
 import { CustomerServiceService } from '../../services/customer-service/customer-service.service';
-import { Customer } from '../../types/types';
-import { EditModalComponent } from '../../components/edit-modal/edit-modal.component';
 import { CommonModule } from '@angular/common';
-import { AddModalComponent } from '../../components/add-modal/add-modal.component';
+import { AddModalComponent } from './components/add-modal/add-modal.component';
+import { EditModalComponent } from './components/edit-modal/edit-modal.component';
+import { Customer } from '../../types/types';
 
 @Component({
   selector: 'app-customers',

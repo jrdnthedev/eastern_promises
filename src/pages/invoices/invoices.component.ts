@@ -9,8 +9,8 @@ import { InvoiceService } from '../../services/invoice-service/invoice.service';
 import { Invoice } from '../../types/types';
 import { CommonModule } from '@angular/common';
 import { TableComponent } from '../../components/table/table.component';
-import { AddInvoiceModalComponent } from '../../components/add-invoice-modal/add-invoice-modal.component';
-import { EditInvoiceModalComponent } from '../../components/edit-invoice-modal/edit-invoice-modal.component';
+import { AddInvoiceModalComponent } from './components/add-invoice-modal/add-invoice-modal.component';
+import { EditInvoiceModalComponent } from './components/edit-invoice-modal/edit-invoice-modal.component';
 import { PaginationComponent } from '../../components/pagination/pagination.component';
 
 @Component({

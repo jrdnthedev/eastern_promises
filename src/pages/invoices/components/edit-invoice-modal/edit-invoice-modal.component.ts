@@ -1,5 +1,5 @@
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
-import { Invoice, InvoiceStatus } from '../../types/types';
+import { Invoice, InvoiceStatus } from '../../../../types/types';
 import {
   FormControl,
   FormGroup,
@@ -7,7 +7,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { InvoiceService } from '../../services/invoice-service/invoice.service';
+import { InvoiceService } from '../../../../services/invoice-service/invoice.service';
 
 @Component({
   selector: 'app-edit-invoice-modal',

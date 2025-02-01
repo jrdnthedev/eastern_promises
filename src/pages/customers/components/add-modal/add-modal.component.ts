@@ -7,8 +7,8 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Customer } from '../../types/types';
-import { CustomerServiceService } from '../../services/customer-service/customer-service.service';
+import { Customer } from '../../../../types/types';
+import { CustomerServiceService } from '../../../../services/customer-service/customer-service.service';
 
 @Component({
   selector: 'app-add-modal',

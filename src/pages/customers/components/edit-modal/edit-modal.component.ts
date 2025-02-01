@@ -1,5 +1,5 @@
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
-import { Customer } from '../../types/types';
+
 import {
   FormControl,
   FormGroup,
@@ -7,7 +7,8 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { CustomerServiceService } from '../../services/customer-service/customer-service.service';
+import { CustomerServiceService } from '../../../../services/customer-service/customer-service.service';
+import { Customer } from '../../../../types/types';
 
 @Component({
   selector: 'app-edit-modal',
