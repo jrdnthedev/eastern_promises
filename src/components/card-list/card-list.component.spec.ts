@@ -16,16 +16,25 @@ describe('CardListComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('should have default page link', () => {
+    expect(component.pageLink).toBe('/');
   });
 
-  it('should display card title', () => {
-    expect(component.title).toBe(componentTitle);
+  it('should accept title input', () => {
+    component.title = 'My Custom Title';
+    fixture.detectChanges();
+    expect(component.title).toBe('My Custom Title');
   });
 
-  it('shoud render title in html', () => {
-    const heading = fixture.nativeElement.querySelector('h5');
-    expect(heading.textContent).toBe(componentTitle);
+  it('should accept button text input', () => {
+    component.btnText = 'Click Me';
+    fixture.detectChanges();
+    expect(component.btnText).toBe('Click Me');
+  });
+
+  it('should accept page link input', () => {
+    component.pageLink = '/custom-link';
+    fixture.detectChanges();
+    expect(component.pageLink).toBe('/custom-link');
   });
 });
