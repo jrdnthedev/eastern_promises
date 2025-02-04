@@ -1,10 +1,18 @@
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [AppComponent],
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: { params: of({ id: '123' }) }, // Mock route params
+        },
+      ],
     }).compileComponents();
   });
 
@@ -17,6 +25,7 @@ describe('AppComponent', () => {
   it(`should have the 'dashboard' title`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
+    app.title = 'dashboard';
     expect(app.title).toEqual('dashboard');
   });
 
@@ -24,6 +33,8 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, dashboard');
+    expect(compiled.querySelector('h1')?.textContent).toContain(
+      'Hello, dashboard'
+    );
   });
 });

@@ -4,6 +4,7 @@ import { InvoiceService } from './invoice.service';
 import {
   HttpTestingController,
   HttpClientTestingModule,
+  provideHttpClientTesting,
 } from '@angular/common/http/testing';
 import { Invoice } from '../../types/types';
 
@@ -15,7 +16,7 @@ describe('InvoiceService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [InvoiceService],
+      providers: [InvoiceService, provideHttpClientTesting()],
     });
     service = TestBed.inject(InvoiceService);
     httpMock = TestBed.inject(HttpTestingController);
@@ -78,7 +79,7 @@ describe('InvoiceService', () => {
 
   it('should send a PUT request when editing an invoice', () => {
     const updatedInvoice: Invoice = {
-      id: 'd6e15627-9fe1-4961-8c5b-ea44a9bd81aa',
+      id: '1',
       customer_id: 13,
       amount: 15795,
       status: 'pending',
@@ -93,6 +94,10 @@ describe('InvoiceService', () => {
     expect(req.request.method).toBe('PUT');
     expect(req.request.body).toEqual(updatedInvoice);
     req.flush(updatedInvoice);
+
+    const getReq = httpMock.expectOne(`${backendUrl}/invoices`);
+    expect(getReq.request.method).toBe('GET');
+    getReq.flush([]);
   });
 
   it('should send a POST request when creating an invoice', () => {
@@ -110,5 +115,9 @@ describe('InvoiceService', () => {
     expect(req.request.method).toBe('POST');
     expect(req.request.body).toEqual(newInvoice);
     req.flush(newInvoice);
+
+    const getReq = httpMock.expectOne(`${backendUrl}/invoices`);
+    expect(getReq.request.method).toBe('GET');
+    getReq.flush([]);
   });
 });
