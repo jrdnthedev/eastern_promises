@@ -42,6 +42,7 @@ export class EditInvoiceModalComponent {
     const updatedInvoice = {
       ...this.updatedInvoice.value,
       id: this.invoice.id,
+      date: this.invoice.date,
     };
     console.log(updatedInvoice);
     this.invoiceService.editInvoice(updatedInvoice).subscribe();
