@@ -4,6 +4,7 @@ import { CustomerServiceService } from '../../services/customer-service/customer
 import { InvoiceService } from '../../services/invoice-service/invoice.service';
 import { of } from 'rxjs';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { ActivatedRoute } from '@angular/router';
 
 describe('DashboardComponent', () => {
   let component: DashboardComponent;
@@ -29,6 +30,10 @@ describe('DashboardComponent', () => {
         { provide: CustomerServiceService, useValue: customerServiceSpy },
         { provide: InvoiceService, useValue: invoiceServiceSpy },
         provideHttpClientTesting(),
+        {
+          provide: ActivatedRoute,
+          useValue: { params: of({ id: '123' }) },
+        },
       ],
     }).compileComponents();
 

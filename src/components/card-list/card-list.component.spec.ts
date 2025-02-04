@@ -1,15 +1,22 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { ActivatedRoute } from '@angular/router';
 import { CardListComponent } from './card-list.component';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { of } from 'rxjs';
 
 describe('CardListComponent', () => {
   let component: CardListComponent;
   let fixture: ComponentFixture<CardListComponent>;
-  const componentTitle = 'New Card List';
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CardListComponent, provideHttpClientTesting()],
+      imports: [CardListComponent],
+      providers: [
+        provideHttpClientTesting(),
+        {
+          provide: ActivatedRoute,
+          useValue: { params: of({ id: '123' }) },
+        },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(CardListComponent);
