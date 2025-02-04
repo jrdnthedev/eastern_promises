@@ -44,6 +44,8 @@ describe('PaginationComponent', () => {
 
   it('should emit pageChange event when a valid page is selected', () => {
     spyOn(component.pageChange, 'emit');
+    component.totalItems = 50;
+    component.itemsPerPage = 10;
     component.onPageChange(2);
     expect(component.pageChange.emit).toHaveBeenCalledWith(2);
   });
@@ -51,6 +53,7 @@ describe('PaginationComponent', () => {
   it('should not emit pageChange event when an invalid page is selected', () => {
     spyOn(component.pageChange, 'emit');
     component.onPageChange(0);
+
     expect(component.pageChange.emit).not.toHaveBeenCalled();
   });
 
