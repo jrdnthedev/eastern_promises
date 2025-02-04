@@ -1,6 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AddInvoiceModalComponent } from './add-invoice-modal.component';
+import {
+  HttpClientTestingModule,
+  provideHttpClientTesting,
+} from '@angular/common/http/testing';
 
 describe('AddInvoiceModalComponent', () => {
   let component: AddInvoiceModalComponent;
@@ -8,9 +12,9 @@ describe('AddInvoiceModalComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AddInvoiceModalComponent]
-    })
-    .compileComponents();
+      imports: [AddInvoiceModalComponent, HttpClientTestingModule],
+      providers: [provideHttpClientTesting()],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(AddInvoiceModalComponent);
     component = fixture.componentInstance;

@@ -1,6 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EditModalComponent } from './edit-modal.component';
+import {
+  HttpClientTestingModule,
+  provideHttpClientTesting,
+} from '@angular/common/http/testing';
 
 describe('EditModalComponent', () => {
   let component: EditModalComponent;
@@ -8,9 +12,9 @@ describe('EditModalComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [EditModalComponent]
-    })
-    .compileComponents();
+      imports: [EditModalComponent, HttpClientTestingModule],
+      providers: [provideHttpClientTesting()],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(EditModalComponent);
     component = fixture.componentInstance;

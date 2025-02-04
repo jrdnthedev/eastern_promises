@@ -1,6 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { InvoicesComponent } from './invoices.component';
+import {
+  HttpClientTestingModule,
+  provideHttpClientTesting,
+} from '@angular/common/http/testing';
 
 describe('InvoicesComponent', () => {
   let component: InvoicesComponent;
@@ -8,9 +12,9 @@ describe('InvoicesComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [InvoicesComponent]
-    })
-    .compileComponents();
+      imports: [InvoicesComponent, HttpClientTestingModule],
+      providers: [provideHttpClientTesting()],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(InvoicesComponent);
     component = fixture.componentInstance;

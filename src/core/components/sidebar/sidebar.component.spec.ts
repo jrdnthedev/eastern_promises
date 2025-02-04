@@ -48,12 +48,20 @@ describe('SidebarComponent', () => {
   });
 
   it('should update isMobile on window resize', () => {
+    const fixture = TestBed.createComponent(SidebarComponent);
+    fixture.detectChanges();
+
     const event = new Event('resize');
-    spyOnProperty(window, 'innerWidth', 'get').and.returnValue(700);
+
+    const innerWidthSpy = spyOnProperty(window, 'innerWidth', 'get');
+
+    innerWidthSpy.and.returnValue(700);
+    window.dispatchEvent(event);
     component.onResize(event);
     expect(component.isMobile).toBeTrue();
 
-    spyOnProperty(window, 'innerWidth', 'get').and.returnValue(900);
+    innerWidthSpy.and.returnValue(900);
+    window.dispatchEvent(event);
     component.onResize(event);
     expect(component.isMobile).toBeFalse();
   });
