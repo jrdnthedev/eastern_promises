@@ -3,6 +3,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SidebarComponent } from './sidebar.component';
 import { ElementRef } from '@angular/core';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
 
 describe('SidebarComponent', () => {
   let component: SidebarComponent;
@@ -11,7 +13,13 @@ describe('SidebarComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [SidebarComponent],
-      providers: [provideHttpClientTesting()],
+      providers: [
+        provideHttpClientTesting(),
+        {
+          provide: ActivatedRoute,
+          useValue: { params: of({ id: '123' }) },
+        },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(SidebarComponent);
