@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { DashboardComponent } from './dashboard.component';
 import { CustomerServiceService } from '../../services/customer-service/customer-service.service';
 import { InvoiceService } from '../../services/invoice-service/invoice.service';
 import { of } from 'rxjs';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 
 describe('DashboardComponent', () => {
   let component: DashboardComponent;
@@ -28,6 +28,7 @@ describe('DashboardComponent', () => {
       providers: [
         { provide: CustomerServiceService, useValue: customerServiceSpy },
         { provide: InvoiceService, useValue: invoiceServiceSpy },
+        provideHttpClientTesting(),
       ],
     }).compileComponents();
 

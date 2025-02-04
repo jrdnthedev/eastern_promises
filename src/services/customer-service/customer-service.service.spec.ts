@@ -4,6 +4,7 @@ import { CustomerServiceService } from './customer-service.service';
 import {
   HttpTestingController,
   HttpClientTestingModule,
+  provideHttpClientTesting,
 } from '@angular/common/http/testing';
 import { Customer } from '../../types/types';
 
@@ -15,7 +16,7 @@ describe('CustomerServiceService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [CustomerServiceService],
+      providers: [CustomerServiceService, provideHttpClientTesting()],
     });
     service = TestBed.inject(CustomerServiceService);
     httpMock = TestBed.inject(HttpTestingController);
@@ -65,6 +66,10 @@ describe('CustomerServiceService', () => {
     expect(req.request.method).toBe('PUT');
     expect(req.request.body).toEqual(updatedCustomer);
     req.flush(updatedCustomer);
+
+    const getReq = httpMock.expectOne(`${backendUrl}/customers`);
+    expect(getReq.request.method).toBe('GET');
+    getReq.flush([]);
   });
 
   it('should send a POST request when creating a customer', () => {
@@ -80,5 +85,9 @@ describe('CustomerServiceService', () => {
     expect(req.request.method).toBe('POST');
     expect(req.request.body).toEqual(newCustomer);
     req.flush(newCustomer);
+
+    const getReq = httpMock.expectOne(`${backendUrl}/customers`);
+    expect(getReq.request.method).toBe('GET');
+    getReq.flush([]);
   });
 });
