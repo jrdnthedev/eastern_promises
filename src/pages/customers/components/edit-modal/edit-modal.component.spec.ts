@@ -1,13 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EditModalComponent } from './edit-modal.component';
-import {
-  HttpClientTestingModule,
-  provideHttpClientTesting,
-} from '@angular/common/http/testing';
 import { EventEmitter } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { of } from 'rxjs';
 import { CustomerServiceService } from '../../../../services/customer-service/customer-service.service';
 
 describe('EditModalComponent', () => {
