@@ -4,7 +4,6 @@ import { RouterModule } from '@angular/router';
 @Component({
   selector: 'app-card-list',
   standalone: true,
-  imports: [RouterModule],
   templateUrl: './card-list.component.html',
   styleUrl: './card-list.component.scss',
 })

@@ -13,8 +13,8 @@ import { UtilService } from '../../../../services/util-service/util.service';
 
 @Component({
   selector: 'app-add-modal',
-  standalone: true,
   imports: [FormsModule, ReactiveFormsModule],
+  standalone: true,
   templateUrl: './add-modal.component.html',
   styleUrl: './add-modal.component.scss',
 })

@@ -2,11 +2,9 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-revenue',
-  standalone: true,
   imports: [],
+  standalone: true,
   templateUrl: './revenue.component.html',
-  styleUrl: './revenue.component.scss'
+  styleUrl: './revenue.component.scss',
 })
-export class RevenueComponent {
-
-}
+export class RevenueComponent {}

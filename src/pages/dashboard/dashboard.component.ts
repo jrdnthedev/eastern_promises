@@ -6,8 +6,8 @@ import { InvoiceService } from '../../services/invoice-service/invoice.service';
 
 @Component({
   selector: 'app-dashboard',
-  standalone: true,
   imports: [CardListComponent, CommonModule],
+  standalone: true,
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
 })

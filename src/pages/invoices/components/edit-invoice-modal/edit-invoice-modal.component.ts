@@ -11,8 +11,8 @@ import { InvoiceService } from '../../../../services/invoice-service/invoice.ser
 
 @Component({
   selector: 'app-edit-invoice-modal',
-  standalone: true,
   imports: [FormsModule, ReactiveFormsModule],
+  standalone: true,
   templateUrl: './edit-invoice-modal.component.html',
   styleUrl: './edit-invoice-modal.component.scss',
 })

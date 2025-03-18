@@ -16,8 +16,8 @@ import { map, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-invoices',
-  standalone: true,
   imports: [CommonModule, TableComponent, PaginationComponent],
+  standalone: true,
   templateUrl: './invoices.component.html',
   styleUrl: './invoices.component.scss',
 })

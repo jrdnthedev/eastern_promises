@@ -1,12 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { HostListener } from '@angular/core';
-import { RouterLinkActive, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
+  imports: [CommonModule],
   standalone: true,
-  imports: [CommonModule, RouterModule, RouterLinkActive],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss',
 })

@@ -14,8 +14,8 @@ import { Customer } from '../../types/types';
 
 @Component({
   selector: 'app-customers',
-  standalone: true,
   imports: [TableComponent, CommonModule],
+  standalone: true,
   templateUrl: './customers.component.html',
   styleUrl: './customers.component.scss',
 })

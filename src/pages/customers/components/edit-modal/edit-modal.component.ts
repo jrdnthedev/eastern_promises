@@ -12,8 +12,8 @@ import { Customer } from '../../../../types/types';
 
 @Component({
   selector: 'app-edit-modal',
-  standalone: true,
   imports: [FormsModule, ReactiveFormsModule],
+  standalone: true,
   templateUrl: './edit-modal.component.html',
   styleUrl: './edit-modal.component.scss',
 })

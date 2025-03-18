@@ -3,8 +3,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-pagination',
-  standalone: true,
   imports: [CommonModule],
+  standalone: true,
   templateUrl: './pagination.component.html',
   styleUrl: './pagination.component.scss',
 })

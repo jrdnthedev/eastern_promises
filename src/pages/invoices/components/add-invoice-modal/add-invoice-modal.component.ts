@@ -12,8 +12,8 @@ import { UtilService } from '../../../../services/util-service/util.service';
 
 @Component({
   selector: 'app-add-invoice-modal',
-  standalone: true,
   imports: [FormsModule, ReactiveFormsModule],
+  standalone: true,
   templateUrl: './add-invoice-modal.component.html',
   styleUrl: './add-invoice-modal.component.scss',
 })
