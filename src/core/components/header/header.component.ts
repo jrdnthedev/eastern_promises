@@ -15,7 +15,7 @@ export class HeaderComponent {
   constructor() {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        const route = event.urlAfterRedirects.replace('/', '');
+        const route = event.urlAfterRedirects.replace('/', '').split('?')[0];
         this.currentRoute.set(route);
       }
     });
