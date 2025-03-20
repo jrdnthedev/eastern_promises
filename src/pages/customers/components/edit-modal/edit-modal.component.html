@@ -71,6 +71,11 @@
                 required=""
                 formControlName="name"
               />
+              @if(updatedCustomer.controls['name'].invalid) {
+              <p class="text-sm text-red-600 dark:text-red-500">
+                Name required
+              </p>
+              }
             </div>
             <div class="col-span-2 sm:col-span-1">
               <label
@@ -86,6 +91,11 @@
                 required=""
                 formControlName="email"
               />
+              @if(updatedCustomer.controls['email'].invalid) {
+              <p class="text-sm text-red-600 dark:text-red-500">
+                Email required
+              </p>
+              }
             </div>
           </div>
           <button
