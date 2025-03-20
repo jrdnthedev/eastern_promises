@@ -27,7 +27,7 @@ export class RevenueComponent {
           invoices.reduce((acc, item) => {
             if (!acc[item.customer_id]) {
               acc[item.customer_id] = {
-                name: item.customer_id, // Assuming the invoice has a `customer_name` field
+                name: item.customer_id,
                 series: [],
               };
             }
