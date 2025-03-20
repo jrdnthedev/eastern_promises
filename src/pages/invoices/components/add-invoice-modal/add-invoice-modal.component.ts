@@ -44,8 +44,8 @@ export class AddInvoiceModalComponent {
         id: this.utilService.generateUUID(),
       };
       this.invoiceService.createInvoice(invoice);
+      this.destroy.emit();
     }
-    this.destroy.emit();
   }
 
   closeModal() {

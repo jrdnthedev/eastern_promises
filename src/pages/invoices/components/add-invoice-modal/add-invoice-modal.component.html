@@ -75,6 +75,11 @@
                 required=""
                 formControlName="amount"
               />
+              @if(invoiceGroup.controls['amount'].invalid) {
+              <p class="text-sm text-red-600 dark:text-red-500">
+                amount required
+              </p>
+              }
             </div>
             <div class="col-span-2 sm:col-span-1">
               <label
