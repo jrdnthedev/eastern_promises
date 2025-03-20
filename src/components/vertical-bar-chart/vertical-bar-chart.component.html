@@ -1,4 +1,5 @@
 <div #containerRef>
+  @if(isLoaded) {
   <ngx-charts-bar-vertical-2d
     [view]="[containerRef.offsetWidth, 400]"
     [scheme]="colorScheme"
@@ -17,4 +18,5 @@
     (deactivate)="onDeactivate($event)"
   >
   </ngx-charts-bar-vertical-2d>
+  } @else { loading... }
 </div>

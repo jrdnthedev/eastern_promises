@@ -5,6 +5,7 @@ import { Revenue } from '../../types/types';
 @Component({
   selector: 'app-vertical-bar-chart',
   imports: [NgxChartsModule],
+  standalone: true,
   templateUrl: './vertical-bar-chart.component.html',
   styleUrl: './vertical-bar-chart.component.scss',
 })
@@ -24,8 +25,14 @@ export class VerticalBarChartComponent {
     selectable: true,
     group: ScaleType.Ordinal,
   };
+  isLoaded = false;
   @Input() chartData!: Revenue[];
 
+  ngOnInit() {
+    setTimeout(() => {
+      this.isLoaded = true;
+    });
+  }
   onSelect(data: Event): void {
     console.log('Item clicked', JSON.parse(JSON.stringify(data)));
   }
