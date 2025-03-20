@@ -37,4 +37,8 @@ export class CustomerServiceService {
       .pipe(tap(() => this.getCustomers()))
       .subscribe();
   }
+
+  getCustomerById(id: string): Observable<Customer> {
+    return this.http.get<Customer>(`${this.backendUrl}/customers/${id}`);
+  }
 }

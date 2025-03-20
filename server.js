@@ -176,6 +176,17 @@ app.get('/customers', (req, res) => {
     res.status(201).json(customers);
 });
 
+app.get('/customers/:id', (req, res) => {
+    const customerId = req.params.id;
+    const customer = customers.find((c) => c.id === customerId);
+
+    if (!customer) {
+        return res.status(404).json({ message: 'Customer not found' });
+    }
+
+    res.status(200).json(customer);
+});
+
 app.put('/customers/:id', (req, res) => {
     const customerId = req.params.id;
     const updatedCustomer = req.body;
