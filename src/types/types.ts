@@ -14,8 +14,8 @@ export type Invoice = {
 };
 
 export type Revenue = {
-  month: string;
-  revenue: number;
+  name: string;
+  series: [];
 };
 
 export type InvoiceStatus = 'paid' | 'pending' | 'draft';

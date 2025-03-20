@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { VerticalBarChartComponent } from '../../components/vertical-bar-chart/vertical-bar-chart.component';
 import { InvoiceService } from '../../services/invoice-service/invoice.service';
 import { map } from 'rxjs/operators';
+import { Revenue } from '../../types/types';
 
 @Component({
   selector: 'app-revenue',
@@ -14,7 +15,7 @@ export class RevenueComponent {
   chartTitle = 'Revenue Chart';
   private invoiceService = inject(InvoiceService);
   invoices$ = this.invoiceService.invoice$;
-  invoiceData: any[] = [];
+  invoiceData: Revenue[] = [];
 
   ngOnInit() {
     this.invoiceService.getInvoices();
@@ -37,10 +38,10 @@ export class RevenueComponent {
               extra: { code: item.customer_id },
             });
             return acc;
-          }, {} as Record<string, { name: string; series: any[] }>)
+          }, {} as Record<string, Revenue>)
         ),
-        map((groupedItems) => Object.values(groupedItems)) // Convert object to array
+        map((groupedItems) => Object.values(groupedItems))
       )
-      .subscribe((result) => (this.invoiceData = result));
+      .subscribe((result) => (this.invoiceData = result as Revenue[]));
   }
 }
