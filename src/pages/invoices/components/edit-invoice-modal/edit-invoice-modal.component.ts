@@ -38,7 +38,8 @@ export class EditInvoiceModalComponent {
     this.destroy.emit();
   }
 
-  updateInvoice() {
+  updateInvoice(e: Event) {
+    e.preventDefault();
     const updatedInvoice = {
       ...this.updatedInvoice.value,
       id: this.invoice.id,

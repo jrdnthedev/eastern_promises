@@ -35,7 +35,8 @@ export class EditModalComponent {
     this.destroy.emit();
   }
 
-  updateCustomer() {
+  updateCustomer(e: Event) {
+    e.preventDefault();
     const customer: Customer = {
       ...this.customer,
       name: this.updatedCustomer.value.name,

@@ -12,7 +12,7 @@ import { TableComponent } from '../../components/table/table.component';
 import { AddInvoiceModalComponent } from './components/add-invoice-modal/add-invoice-modal.component';
 import { EditInvoiceModalComponent } from './components/edit-invoice-modal/edit-invoice-modal.component';
 import { PaginationComponent } from '../../components/pagination/pagination.component';
-import { map, Observable } from 'rxjs';
+import { finalize, map, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-invoices',
@@ -71,7 +71,8 @@ export class InvoicesComponent {
         const endIndex = startIndex + this.itemsPerPage;
         this.totalItems = items.length;
         return items.slice(startIndex, endIndex);
-      })
+      }),
+      finalize(() => console.log('Unsubscribed!'))
     );
   }
   createInvoice() {

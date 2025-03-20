@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { VerticalBarChartComponent } from '../../components/vertical-bar-chart/vertical-bar-chart.component';
 import { InvoiceService } from '../../services/invoice-service/invoice.service';
-import { map, switchMap, takeUntil } from 'rxjs/operators';
+import { finalize, map, switchMap, takeUntil } from 'rxjs/operators';
 import { Revenue } from '../../types/types';
 import { CustomerServiceService } from '../../services/customer-service/customer-service.service';
 import { forkJoin, Subject } from 'rxjs';
@@ -57,7 +57,8 @@ export class RevenueComponent {
             return acc;
           }, {} as Record<string, Revenue>)
         ),
-        map((groupedItems) => Object.values(groupedItems))
+        map((groupedItems) => Object.values(groupedItems)),
+        finalize(() => console.log('Unsubscribed!'))
       )
       .subscribe((result) => (this.invoiceData = result as Revenue[]));
   }

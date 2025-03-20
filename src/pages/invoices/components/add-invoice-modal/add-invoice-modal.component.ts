@@ -35,7 +35,8 @@ export class AddInvoiceModalComponent {
     });
   }
 
-  createInvoice() {
+  createInvoice(e: Event) {
+    e.preventDefault();
     if (this.invoiceGroup.valid) {
       const invoice: Invoice = {
         ...this.invoiceGroup.value,

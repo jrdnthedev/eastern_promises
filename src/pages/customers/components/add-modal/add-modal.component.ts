@@ -30,7 +30,8 @@ export class AddModalComponent {
     });
   }
 
-  createCustomer() {
+  createCustomer(e: Event) {
+    e.preventDefault();
     if (this.createCustomerGroup.valid) {
       const customer: Customer = {
         id: this.utilService.generateUUID(),
