@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { NgxChartsModule, Color, ScaleType } from '@swimlane/ngx-charts';
+import { Revenue } from '../../types/types';
 
 @Component({
   selector: 'app-vertical-bar-chart',
@@ -19,21 +20,21 @@ export class VerticalBarChartComponent {
   legendTitle = 'Years';
   colorScheme: Color = {
     domain: ['#5AA454', '#C7B42C', '#AAAAAA'],
-    name: 'cool',
+    name: 'chart',
     selectable: true,
     group: ScaleType.Ordinal,
   };
-  @Input() chartData: any = [];
+  @Input() chartData!: Revenue[];
 
-  onSelect(data: any): void {
+  onSelect(data: Event): void {
     console.log('Item clicked', JSON.parse(JSON.stringify(data)));
   }
 
-  onActivate(data: any): void {
+  onActivate(data: Event): void {
     console.log('Activate', JSON.parse(JSON.stringify(data)));
   }
 
-  onDeactivate(data: any): void {
+  onDeactivate(data: Event): void {
     console.log('Deactivate', JSON.parse(JSON.stringify(data)));
   }
 }
