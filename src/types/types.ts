@@ -15,7 +15,7 @@ export type Invoice = {
 
 export type Revenue = {
   name: string;
-  series: [];
+  series: InvoiceName[];
 };
 
 export type InvoiceName = {

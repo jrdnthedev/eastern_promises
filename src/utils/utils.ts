@@ -1,6 +1,6 @@
 import { Observable, forkJoin } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
-import { Invoice, InvoiceName, Revenue } from '../types/types';
+import { Invoice, Revenue } from '../types/types';
 import { CustomerServiceService } from '../services/customer-service/customer-service.service';
 
 export function convertIdToName(
@@ -10,7 +10,7 @@ export function convertIdToName(
   return invoices$.pipe(
     switchMap((invoices: Invoice[]) =>
       forkJoin(
-        invoices.map((item) =>
+        invoices.map((item: Invoice) =>
           customerService.getCustomerById(item.customer_id).pipe(
             map((customer) => ({
               ...item,
@@ -20,7 +20,7 @@ export function convertIdToName(
         )
       )
     ),
-    map((invoicesWithNames) =>
+    map((invoicesWithNames: Invoice[]) =>
       invoicesWithNames.reduce((acc: any, item: any) => {
         if (!acc[item.customer_id]) {
           acc[item.customer_id] = {
