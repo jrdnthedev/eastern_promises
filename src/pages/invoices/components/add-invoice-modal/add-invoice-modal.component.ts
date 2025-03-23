@@ -9,10 +9,12 @@ import {
 import { Invoice, InvoiceStatus } from '../../../../types/types';
 import { InvoiceService } from '../../../../services/invoice-service/invoice.service';
 import { UtilService } from '../../../../services/util-service/util.service';
+import { CustomerServiceService } from '../../../../services/customer-service/customer-service.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-add-invoice-modal',
-  imports: [FormsModule, ReactiveFormsModule],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule],
   standalone: true,
   templateUrl: './add-invoice-modal.component.html',
   styleUrl: './add-invoice-modal.component.scss',
@@ -22,9 +24,11 @@ export class AddInvoiceModalComponent {
   @Input() invoices!: Invoice[];
   invoiceService = inject(InvoiceService);
   utilService = inject(UtilService);
+  customerService = inject(CustomerServiceService);
   invoiceGroup!: FormGroup;
   invoiceStatus: InvoiceStatus[] = ['paid', 'pending', 'draft'];
-
+  uniqueInvoices!: number[];
+  customers$ = this.customerService.customer$;
   ngOnInit() {
     this.invoiceGroup = new FormGroup({
       amount: new FormControl('', [Validators.required]),
@@ -33,6 +37,7 @@ export class AddInvoiceModalComponent {
         Validators.required,
       ]),
     });
+    this.customerService.getCustomers();
   }
 
   createInvoice(e: Event) {

@@ -61,6 +61,10 @@ export class CustomersComponent {
     });
   }
 
+  deleteCustomer(id: string) {
+    this.customerService.deteleCustomer(id);
+  }
+
   closeModal() {
     if (this.componentRef) {
       this.componentRef.destroy();

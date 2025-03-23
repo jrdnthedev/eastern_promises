@@ -90,6 +90,12 @@ export class InvoicesComponent {
       this.closeModal();
     });
   }
+  deleteInvoice(id: string) {
+    this.invoiceService.deleteInvoice(id);
+    if (this.totalItems % this.itemsPerPage === 1) {
+      this.currentPage = 1;
+    }
+  }
 
   closeModal() {
     if (this.componentRef) {

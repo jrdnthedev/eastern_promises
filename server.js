@@ -20,7 +20,7 @@ const users = [
     },
 ];
   
-const customers = [
+let customers = [
   {
     id: 'd6e15727-9fe1-4961-8c5b-ea44a9bd81aa',
     name: 'Evil Rabbit',
@@ -59,7 +59,7 @@ const customers = [
   },
 ];
 
-const invoices = [
+let invoices = [
   {
     id: 'd6e15627-9fe1-4961-8c5b-ea44a9bd81aa',
     customer_id: customers[0].id,
@@ -152,21 +152,6 @@ const invoices = [
     date: '2022-06-05',
   },
 ];
-  
-const revenue = [
-  { month: 'Jan', revenue: 2000 },
-  { month: 'Feb', revenue: 1800 },
-  { month: 'Mar', revenue: 2200 },
-  { month: 'Apr', revenue: 2500 },
-  { month: 'May', revenue: 2300 },
-  { month: 'Jun', revenue: 3200 },
-  { month: 'Jul', revenue: 3500 },
-  { month: 'Aug', revenue: 3700 },
-  { month: 'Sep', revenue: 2500 },
-  { month: 'Oct', revenue: 2800 },
-  { month: 'Nov', revenue: 3000 },
-  { month: 'Dec', revenue: 4800 },
-];
 
 app.use(express.json());
 app.use(cors(corsOptions));
@@ -204,6 +189,20 @@ app.put('/customers/:id', (req, res) => {
         message: 'Customer updated successfully',
         customer: customers[customerIndex],
     });
+});
+
+app.delete('/customers/:id', (req, res) => {
+    const customerId = req.params.id;
+    const customerIndex = customers.findIndex((c) => c.id === customerId);
+
+    if (customerIndex === -1) {
+        return res.status(404).json({ message: 'Customer not found' });
+    }
+    
+    customers.splice(customerIndex, 1);
+    invoices = invoices.filter((i) => i.customer_id !== customerId);
+
+    res.status(200).json({ message: 'Customer deleted successfully' });
 });
 
 app.post('/customers', (req, res) => {
@@ -250,14 +249,22 @@ app.put('/invoices/:id', (req, res) => {
   });
 });
 
+app.delete('/invoices/:id', (req, res) => {
+  const invoiceID = req.params.id;
+  const invoiceIndex = invoices.findIndex((i) => i.id === invoiceID);
+
+  if (invoiceIndex === -1) {
+    return res.status(404).json({ message: 'Invoice not found' });
+  }
+
+  invoices.splice(invoiceIndex, 1);
+
+  res.status(200).json({ message: 'Invoice deleted successfully' });
+});
+
 app.get('/invoices', (req, res) => {
     res.send(invoices);
     res.status(201).json(invoices);
-});
-
-app.get('/revenue', (req, res) => {
-    res.send(revenue);
-    res.status(201).json(revenue);
 });
 
 const server = http.createServer(app);

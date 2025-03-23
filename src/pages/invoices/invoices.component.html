@@ -45,12 +45,18 @@
         <td class="px-6 py-4">{{ invoice.status }}</td>
         <td class="px-6 py-4">{{ invoice.date }}</td>
         <td class="px-6 py-4">{{ invoice.amount | currency }}</td>
-        <td class="px-6 py-4">
+        <td class="px-6 py-4 flex gap-2">
           <button
             (click)="editInvoice(invoice)"
             class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
           >
             Edit
+          </button>
+          <button
+            (click)="deleteInvoice(invoice.id)"
+            class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+          >
+            Delete
           </button>
         </td>
       </tr>

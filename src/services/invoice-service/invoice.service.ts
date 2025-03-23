@@ -41,4 +41,10 @@ export class InvoiceService {
       .pipe(tap(() => this.getInvoices()))
       .subscribe();
   }
+  deleteInvoice(id: string): void {
+    this.http
+      .delete<Invoice>(`${this.backendUrl}/invoices/${id}`)
+      .pipe(tap(() => this.getInvoices()))
+      .subscribe();
+  }
 }

@@ -42,12 +42,19 @@
       </th>
       <td class="px-6 py-4">{{ customer.name }}</td>
       <td class="px-6 py-4">{{ customer.email }}</td>
-      <td class="px-6 py-4">
+      <td class="px-6 py-4 gap-2 flex">
         <button
           (click)="editCustomer(customer)"
           class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
         >
           Edit
+        </button>
+
+        <button
+          (click)="deleteCustomer(customer.id)"
+          class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+        >
+          Delete
         </button>
       </td>
     </tr>
