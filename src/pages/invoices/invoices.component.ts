@@ -103,14 +103,13 @@ export class InvoicesComponent {
   }
 
   sort(value: string) {
-    this.asc.set(!this.asc());
+    this.asc.update((val) => !val);
     const sortedItems = [...this.paginatedItemsSubject.getValue()].sort(
       (a: any, b: any) => {
         const direction = this.asc() ? 1 : -1;
         return a[value] > b[value] ? direction : -direction;
       }
     );
-    console.log(sortedItems);
     this.paginatedItemsSubject.next(sortedItems);
   }
   closeModal() {
