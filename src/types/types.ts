@@ -8,7 +8,7 @@ export type Customer = {
 export type Invoice = {
   id: string;
   status: InvoiceStatus;
-  customer_id: number;
+  customer_id: string;
   date: string;
   amount: number;
 };
