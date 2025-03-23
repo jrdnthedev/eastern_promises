@@ -24,10 +24,12 @@
   <app-table>
     <ng-container table-header>
       <tr>
-        <th scope="col" class="px-6 py-3">Customer Id</th>
-        <th scope="col" class="px-6 py-3">Status</th>
-        <th scope="col" class="px-6 py-3">Date</th>
-        <th scope="col" class="px-6 py-3">Amount</th>
+        <th scope="col" class="px-6 py-3" (click)="sort('customer_id')">
+          Customer Id
+        </th>
+        <th scope="col" class="px-6 py-3" (click)="sort('status')">Status</th>
+        <th scope="col" class="px-6 py-3" (click)="sort('date')">Date</th>
+        <th scope="col" class="px-6 py-3" (click)="sort('amount')">Amount</th>
         <th scope="col" class="px-6 py-3">Action</th>
       </tr>
     </ng-container>

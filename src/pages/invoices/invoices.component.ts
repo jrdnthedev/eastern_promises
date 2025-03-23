@@ -2,6 +2,7 @@ import {
   Component,
   ComponentRef,
   inject,
+  signal,
   ViewChild,
   ViewContainerRef,
 } from '@angular/core';
@@ -12,8 +13,7 @@ import { TableComponent } from '../../components/table/table.component';
 import { AddInvoiceModalComponent } from './components/add-invoice-modal/add-invoice-modal.component';
 import { EditInvoiceModalComponent } from './components/edit-invoice-modal/edit-invoice-modal.component';
 import { PaginationComponent } from '../../components/pagination/pagination.component';
-import { finalize, map, Observable } from 'rxjs';
-
+import { BehaviorSubject, finalize, map } from 'rxjs';
 @Component({
   selector: 'app-invoices',
   imports: [CommonModule, TableComponent, PaginationComponent],
@@ -41,8 +41,9 @@ export class InvoicesComponent {
   currentPage = 1;
   itemsPerPage = 10;
   totalItems = 0;
-  paginatedItems$: Observable<Invoice[]> = new Observable<Invoice[]>();
-
+  private paginatedItemsSubject = new BehaviorSubject<Invoice[]>([]);
+  paginatedItems$ = this.paginatedItemsSubject.asObservable();
+  asc = signal(true);
   ngOnInit() {
     this.invoiceService.getInvoices();
     this.updatePaginatedItems();
@@ -65,15 +66,19 @@ export class InvoicesComponent {
   }
 
   updatePaginatedItems() {
-    this.paginatedItems$ = this.invoices$.pipe(
-      map((items) => {
-        const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-        const endIndex = startIndex + this.itemsPerPage;
-        this.totalItems = items.length;
-        return items.slice(startIndex, endIndex);
-      }),
-      finalize(() => console.log('Unsubscribed!'))
-    );
+    this.invoices$
+      .pipe(
+        map((items) => {
+          const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+          const endIndex = startIndex + this.itemsPerPage;
+          this.totalItems = items.length;
+          return items.slice(startIndex, endIndex);
+        }),
+        finalize(() => console.log('Unsubscribed!'))
+      )
+      .subscribe((paginatedItems) => {
+        this.paginatedItemsSubject.next(paginatedItems);
+      });
   }
   createInvoice() {
     this.addInvoiceModalContainer.clear();
@@ -97,6 +102,17 @@ export class InvoicesComponent {
     }
   }
 
+  sort(value: string) {
+    this.asc.set(!this.asc());
+    const sortedItems = [...this.paginatedItemsSubject.getValue()].sort(
+      (a: any, b: any) => {
+        const direction = this.asc() ? 1 : -1;
+        return a[value] > b[value] ? direction : -direction;
+      }
+    );
+    console.log(sortedItems);
+    this.paginatedItemsSubject.next(sortedItems);
+  }
   closeModal() {
     if (this.componentRef) {
       this.componentRef.destroy();
