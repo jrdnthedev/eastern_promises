@@ -73,8 +73,7 @@ export class InvoicesComponent {
           const endIndex = startIndex + this.itemsPerPage;
           this.totalItems = items.length;
           return items.slice(startIndex, endIndex);
-        }),
-        finalize(() => console.log('Unsubscribed!'))
+        })
       )
       .subscribe((paginatedItems) => {
         this.paginatedItemsSubject.next(paginatedItems);
