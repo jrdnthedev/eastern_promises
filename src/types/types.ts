@@ -18,4 +18,10 @@ export type Revenue = {
   series: [];
 };
 
+export type InvoiceName = {
+  name: string;
+  value: number;
+  extra: { code: string };
+};
+
 export type InvoiceStatus = 'paid' | 'pending' | 'draft';

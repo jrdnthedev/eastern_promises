@@ -1,10 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { VerticalBarChartComponent } from '../../components/vertical-bar-chart/vertical-bar-chart.component';
 import { InvoiceService } from '../../services/invoice-service/invoice.service';
-import { finalize, map, switchMap, takeUntil } from 'rxjs/operators';
+import { finalize, takeUntil } from 'rxjs/operators';
 import { Revenue } from '../../types/types';
 import { CustomerServiceService } from '../../services/customer-service/customer-service.service';
-import { forkJoin, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
+import { convertIdToName } from '../../utils/utils';
 
 @Component({
   selector: 'app-revenue',
@@ -26,41 +27,12 @@ export class RevenueComponent {
     this.createRevenueData();
   }
   createRevenueData() {
-    this.invoices$
+    convertIdToName(this.invoices$, this.customerService)
       .pipe(
         takeUntil(this.destroy$),
-        switchMap((invoices: any[]) =>
-          forkJoin(
-            invoices.map((item) =>
-              this.customerService.getCustomerById(item.customer_id).pipe(
-                map((customer) => ({
-                  ...item,
-                  customer_name: customer.name,
-                }))
-              )
-            )
-          )
-        ),
-        map((invoicesWithNames) =>
-          invoicesWithNames.reduce((acc, item) => {
-            if (!acc[item.customer_id]) {
-              acc[item.customer_id] = {
-                name: item.customer_name,
-                series: [],
-              };
-            }
-            acc[item.customer_id].series.push({
-              name: item.date.split('-')[0],
-              value: item.amount,
-              extra: { code: item.customer_id },
-            });
-            return acc;
-          }, {} as Record<string, Revenue>)
-        ),
-        map((groupedItems) => Object.values(groupedItems)),
         finalize(() => console.log('Unsubscribed!'))
       )
-      .subscribe((result) => (this.invoiceData = result as Revenue[]));
+      .subscribe((result) => (this.invoiceData = result));
   }
 
   ngOnDestroy() {
