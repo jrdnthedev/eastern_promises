@@ -8,6 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { InvoiceService } from '../../../../services/invoice-service/invoice.service';
+import { CustomerServiceService } from '../../../../services/customer-service/customer-service.service';
 
 @Component({
   selector: 'app-edit-invoice-modal',
@@ -22,6 +23,8 @@ export class EditInvoiceModalComponent {
   updatedInvoice!: FormGroup;
   invoiceStatus: InvoiceStatus[] = ['paid', 'pending', 'draft'];
   invoiceService = inject(InvoiceService);
+  customerService = inject(CustomerServiceService);
+  customerName = '';
 
   ngOnInit() {
     this.updatedInvoice = new FormGroup({
@@ -32,6 +35,9 @@ export class EditInvoiceModalComponent {
       amount: new FormControl(this.invoice.amount, Validators.required),
       status: new FormControl(this.invoice.status),
     });
+    this.customerService
+      .getCustomerById(this.invoice.customer_id)
+      .subscribe((customer) => (this.customerName = customer.name));
   }
 
   closeModal() {
