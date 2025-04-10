@@ -100,7 +100,8 @@ export class InvoicesComponent {
     });
   }
   deleteInvoice(id: string) {
-    this.invoiceService.deleteInvoice(id);
+    // this.invoiceService.deleteInvoice(id);
+    this.store.dispatch({ type: '[Invoices] Delete Invoice', id: id });
     if (this.totalItems % this.itemsPerPage === 1) {
       this.currentPage = 1;
     }

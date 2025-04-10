@@ -64,11 +64,12 @@ export class EditInvoiceModalComponent {
     console.log(updatedInvoice);
     // this.invoiceService.editInvoice(updatedInvoice).subscribe();
     this.store.dispatch({
-      type: '[Invoices] Edit Invoice',
+      type: '[Invoices] Update Invoice',
       id: updatedInvoice.id,
-      date: updatedInvoice.date,
       amount: updatedInvoice.amount,
       status: updatedInvoice.status,
+      date: updatedInvoice.date,
+      customer_id: updatedInvoice.customer_id,
     });
     this.closeModal();
   }
