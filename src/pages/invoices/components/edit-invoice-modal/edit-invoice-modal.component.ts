@@ -1,5 +1,5 @@
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
-import { Invoice, InvoiceStatus } from '../../../../types/types';
+import { Customer, Invoice, InvoiceStatus } from '../../../../types/types';
 import {
   FormControl,
   FormGroup,
@@ -9,6 +9,7 @@ import {
 } from '@angular/forms';
 import { InvoiceService } from '../../../../services/invoice-service/invoice.service';
 import { CustomerServiceService } from '../../../../services/customer-service/customer-service.service';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-edit-invoice-modal',
@@ -25,6 +26,7 @@ export class EditInvoiceModalComponent {
   invoiceService = inject(InvoiceService);
   customerService = inject(CustomerServiceService);
   customerName = '';
+  private store = inject(Store);
 
   ngOnInit() {
     this.updatedInvoice = new FormGroup({
@@ -35,9 +37,17 @@ export class EditInvoiceModalComponent {
       amount: new FormControl(this.invoice.amount, Validators.required),
       status: new FormControl(this.invoice.status),
     });
-    this.customerService
-      .getCustomerById(this.invoice.customer_id)
-      .subscribe((customer) => (this.customerName = customer.name));
+    // this.customerService
+    //   .getCustomerById(this.invoice.customer_id)
+    //   .subscribe((customer) => (this.customerName = customer.name));
+    this.store.select('customers').subscribe((customers) => {
+      const customer = customers.find(
+        (customer: Customer) => customer.id === this.invoice.customer_id
+      );
+      if (customer) {
+        this.customerName = customer.name;
+      }
+    });
   }
 
   closeModal() {
@@ -52,7 +62,14 @@ export class EditInvoiceModalComponent {
       date: this.invoice.date,
     };
     console.log(updatedInvoice);
-    this.invoiceService.editInvoice(updatedInvoice).subscribe();
+    // this.invoiceService.editInvoice(updatedInvoice).subscribe();
+    this.store.dispatch({
+      type: '[Invoices] Edit Invoice',
+      id: updatedInvoice.id,
+      date: updatedInvoice.date,
+      amount: updatedInvoice.amount,
+      status: updatedInvoice.status,
+    });
     this.closeModal();
   }
 }

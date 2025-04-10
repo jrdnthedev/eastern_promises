@@ -14,6 +14,7 @@ import { Customer } from '../../types/types';
 
 import { Store } from '@ngrx/store';
 import { selectFeatureCustomers } from './customers.selectors';
+import { InvoiceService } from '../../services/invoice-service/invoice.service';
 @Component({
   selector: 'app-customers',
   imports: [TableComponent, CommonModule],
@@ -22,7 +23,7 @@ import { selectFeatureCustomers } from './customers.selectors';
   styleUrl: './customers.component.scss',
 })
 export class CustomersComponent {
-  private customerService = inject(CustomerServiceService);
+  private InvoiceService = inject(InvoiceService);
   private store = inject(Store);
   customers$ = this.store.select(selectFeatureCustomers);
 
@@ -40,12 +41,7 @@ export class CustomersComponent {
   componentRef?: ComponentRef<EditModalComponent>;
   addcomponentRef?: ComponentRef<AddModalComponent>;
 
-  ngOnInit() {
-    // this.customerService.getCustomers();
-    this.customers$.subscribe((customers) => {
-      console.log('Customers from store:', customers);
-    });
-  }
+  ngOnInit() {}
 
   createCustomer() {
     this.addCustomerModalContainer.clear();

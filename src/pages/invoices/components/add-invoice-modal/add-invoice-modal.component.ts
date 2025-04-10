@@ -7,10 +7,10 @@ import {
   Validators,
 } from '@angular/forms';
 import { Invoice, InvoiceStatus } from '../../../../types/types';
-import { InvoiceService } from '../../../../services/invoice-service/invoice.service';
 import { UtilService } from '../../../../services/util-service/util.service';
 import { CustomerServiceService } from '../../../../services/customer-service/customer-service.service';
 import { CommonModule } from '@angular/common';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-add-invoice-modal',
@@ -22,13 +22,13 @@ import { CommonModule } from '@angular/common';
 export class AddInvoiceModalComponent {
   @Output() destroy = new EventEmitter<void>();
   @Input() invoices!: Invoice[];
-  invoiceService = inject(InvoiceService);
   utilService = inject(UtilService);
   customerService = inject(CustomerServiceService);
   invoiceGroup!: FormGroup;
   invoiceStatus: InvoiceStatus[] = ['paid', 'pending', 'draft'];
-  uniqueInvoices!: number[];
-  customers$ = this.customerService.customer$;
+  private store = inject(Store);
+  customers$ = this.store.select('customers');
+
   ngOnInit() {
     this.invoiceGroup = new FormGroup({
       amount: new FormControl('', [Validators.required]),
@@ -37,7 +37,6 @@ export class AddInvoiceModalComponent {
         Validators.required,
       ]),
     });
-    this.customerService.getCustomers();
   }
 
   createInvoice(e: Event) {
@@ -48,7 +47,14 @@ export class AddInvoiceModalComponent {
         date: new Date().toISOString().split('T')[0],
         id: this.utilService.generateUUID(),
       };
-      this.invoiceService.createInvoice(invoice);
+      this.store.dispatch({
+        type: '[Invoices] Add Invoice',
+        id: invoice.id,
+        date: invoice.date,
+        amount: invoice.amount,
+        status: invoice.status,
+        customer_id: invoice.customer_id,
+      });
       this.destroy.emit();
     }
   }

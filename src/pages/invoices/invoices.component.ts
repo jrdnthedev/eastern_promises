@@ -14,6 +14,7 @@ import { AddInvoiceModalComponent } from './components/add-invoice-modal/add-inv
 import { EditInvoiceModalComponent } from './components/edit-invoice-modal/edit-invoice-modal.component';
 import { PaginationComponent } from '../../components/pagination/pagination.component';
 import { BehaviorSubject, finalize, map } from 'rxjs';
+import { Store } from '@ngrx/store';
 @Component({
   selector: 'app-invoices',
   imports: [CommonModule, TableComponent, PaginationComponent],
@@ -23,7 +24,8 @@ import { BehaviorSubject, finalize, map } from 'rxjs';
 })
 export class InvoicesComponent {
   private invoiceService = inject(InvoiceService);
-  invoices$ = this.invoiceService.invoice$;
+  private store = inject(Store);
+  invoices$ = this.store.select('invoices');
   @ViewChild('dynamicEditModalContainer', {
     read: ViewContainerRef,
     static: true,
@@ -45,8 +47,11 @@ export class InvoicesComponent {
   paginatedItems$ = this.paginatedItemsSubject.asObservable();
   asc = signal(true);
   ngOnInit() {
-    this.invoiceService.getInvoices();
+    // this.invoiceService.getInvoices();
     this.updatePaginatedItems();
+    this.store.select('invoices').subscribe((invoices) => {
+      console.log('invoices', invoices);
+    });
   }
 
   editInvoice(invoice: Invoice) {

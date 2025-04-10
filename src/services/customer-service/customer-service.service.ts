@@ -3,6 +3,8 @@ import { inject, Injectable } from '@angular/core';
 import { Customer } from '../../types/types';
 import { BehaviorSubject, Observable, ReplaySubject, scan, tap } from 'rxjs';
 import { InvoiceService } from '../invoice-service/invoice.service';
+import { Store } from '@ngrx/store';
+import { selectFeatureCustomers } from '../../pages/customers/customers.selectors';
 
 @Injectable({
   providedIn: 'root',
@@ -15,11 +17,14 @@ export class CustomerServiceService {
   private latestCustomers = new ReplaySubject<Customer[]>(1);
   latestCustomers$ = this.latestCustomers.asObservable();
   invoices = inject(InvoiceService);
+  private store = inject(Store);
   constructor() {}
 
   getCustomers(): void {
-    this.http
-      .get<Customer[]>(`${this.backendUrl}/customers`)
+    // this.http
+    //   .get<Customer[]>(`${this.backendUrl}/customers`)
+    this.store
+      .select(selectFeatureCustomers)
       .subscribe((customers: Customer[]) => {
         this.customerSubject.next(customers);
         this.latestCustomers.next(customers.slice(-3));
