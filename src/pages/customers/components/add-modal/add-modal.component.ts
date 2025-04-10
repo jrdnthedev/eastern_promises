@@ -10,6 +10,7 @@ import {
 import { Customer } from '../../../../types/types';
 import { CustomerServiceService } from '../../../../services/customer-service/customer-service.service';
 import { UtilService } from '../../../../services/util-service/util.service';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-add-modal',
@@ -23,6 +24,7 @@ export class AddModalComponent {
   createCustomerGroup!: FormGroup;
   customerService = inject(CustomerServiceService);
   utilService = inject(UtilService);
+  private store = inject(Store);
   ngOnInit() {
     this.createCustomerGroup = new FormGroup({
       name: new FormControl('', [Validators.required]),
@@ -39,7 +41,14 @@ export class AddModalComponent {
         email: this.createCustomerGroup.value.email,
         image_url: '',
       };
-      this.customerService.createCustomer(customer);
+      // this.customerService.createCustomer(customer);
+      this.store.dispatch({
+        type: '[Customers] Add Customer',
+        id: customer.id,
+        name: customer.name,
+        email: customer.email,
+        image_url: customer.image_url,
+      });
       this.destroy.emit();
     }
   }

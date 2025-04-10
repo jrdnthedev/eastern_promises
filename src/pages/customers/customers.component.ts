@@ -12,6 +12,8 @@ import { AddModalComponent } from './components/add-modal/add-modal.component';
 import { EditModalComponent } from './components/edit-modal/edit-modal.component';
 import { Customer } from '../../types/types';
 
+import { Store } from '@ngrx/store';
+import { selectFeatureCustomers } from './customers.selectors';
 @Component({
   selector: 'app-customers',
   imports: [TableComponent, CommonModule],
@@ -21,7 +23,9 @@ import { Customer } from '../../types/types';
 })
 export class CustomersComponent {
   private customerService = inject(CustomerServiceService);
-  customers$ = this.customerService.customer$;
+  private store = inject(Store);
+  customers$ = this.store.select(selectFeatureCustomers);
+
   @ViewChild('dynamicEditModalContainer', {
     read: ViewContainerRef,
     static: true,
@@ -37,7 +41,10 @@ export class CustomersComponent {
   addcomponentRef?: ComponentRef<AddModalComponent>;
 
   ngOnInit() {
-    this.customerService.getCustomers();
+    // this.customerService.getCustomers();
+    this.customers$.subscribe((customers) => {
+      console.log('Customers from store:', customers);
+    });
   }
 
   createCustomer() {
@@ -62,7 +69,11 @@ export class CustomersComponent {
   }
 
   deleteCustomer(id: string) {
-    this.customerService.deteleCustomer(id);
+    // this.customerService.deteleCustomer(id);
+    this.store.dispatch({
+      type: '[Customers] Delete Customer',
+      id: id,
+    });
   }
 
   closeModal() {
