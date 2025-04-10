@@ -1,6 +1,6 @@
+import { Customer } from '../../types/types';
 import * as CustomerActions from './customers.actions';
 import { createReducer, on } from '@ngrx/store';
-import { Customer } from './customers.model';
 
 export const intitialState: Customer[] = [
   {

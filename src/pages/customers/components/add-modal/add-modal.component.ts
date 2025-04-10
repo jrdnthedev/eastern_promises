@@ -41,7 +41,6 @@ export class AddModalComponent {
         email: this.createCustomerGroup.value.email,
         image_url: '',
       };
-      // this.customerService.createCustomer(customer);
       this.store.dispatch({
         type: '[Customers] Add Customer',
         id: customer.id,

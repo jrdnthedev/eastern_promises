@@ -12,4 +12,3 @@ export const deleteCustomer = createAction(
   '[Customers] Delete Customer',
   props<{ id: string }>()
 );
-// export const loadCustomers = createAction('[Customers] Load Customers');

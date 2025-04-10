@@ -139,5 +139,10 @@ export const invoiceReducer = createReducer(
     const updatedInvoices = [...state];
     updatedInvoices.splice(invoiceIndex, 1);
     return updatedInvoices;
+  }),
+  on(InvoiceActions.deleteAllInvoices, (state, { id }) => {
+    const updatedInvoices = state.filter((i) => i.customer_id !== id);
+
+    return updatedInvoices;
   })
 );

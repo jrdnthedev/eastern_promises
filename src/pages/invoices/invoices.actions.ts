@@ -25,3 +25,8 @@ export const deleteInvoice = createAction(
   '[Invoices] Delete Invoice',
   props<{ id: string }>()
 );
+
+export const deleteAllInvoices = createAction(
+  '[Invoices] Delete All Invoices',
+  props<{ id: string }>()
+);

@@ -6,15 +6,11 @@ import {
   ViewContainerRef,
 } from '@angular/core';
 import { TableComponent } from '../../components/table/table.component';
-import { CustomerServiceService } from '../../services/customer-service/customer-service.service';
 import { CommonModule } from '@angular/common';
 import { AddModalComponent } from './components/add-modal/add-modal.component';
 import { EditModalComponent } from './components/edit-modal/edit-modal.component';
 import { Customer } from '../../types/types';
-
 import { Store } from '@ngrx/store';
-import { selectFeatureCustomers } from './customers.selectors';
-import { InvoiceService } from '../../services/invoice-service/invoice.service';
 @Component({
   selector: 'app-customers',
   imports: [TableComponent, CommonModule],
@@ -23,9 +19,8 @@ import { InvoiceService } from '../../services/invoice-service/invoice.service';
   styleUrl: './customers.component.scss',
 })
 export class CustomersComponent {
-  private InvoiceService = inject(InvoiceService);
   private store = inject(Store);
-  customers$ = this.store.select(selectFeatureCustomers);
+  customers$ = this.store.select('customers');
 
   @ViewChild('dynamicEditModalContainer', {
     read: ViewContainerRef,
@@ -65,9 +60,12 @@ export class CustomersComponent {
   }
 
   deleteCustomer(id: string) {
-    // this.customerService.deteleCustomer(id);
     this.store.dispatch({
       type: '[Customers] Delete Customer',
+      id: id,
+    });
+    this.store.dispatch({
+      type: '[Invoices] Delete All Invoices',
       id: id,
     });
   }

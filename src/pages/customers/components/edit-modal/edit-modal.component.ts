@@ -7,7 +7,6 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { CustomerServiceService } from '../../../../services/customer-service/customer-service.service';
 import { Customer } from '../../../../types/types';
 import { Store } from '@ngrx/store';
 
@@ -21,7 +20,6 @@ import { Store } from '@ngrx/store';
 export class EditModalComponent {
   @Input() customer!: Customer;
   updatedCustomer!: FormGroup;
-  private customerService = inject(CustomerServiceService);
   private store = inject(Store);
   @Output() destroy = new EventEmitter<void>();
 
@@ -44,7 +42,7 @@ export class EditModalComponent {
       name: this.updatedCustomer.value.name,
       email: this.updatedCustomer.value.email,
     };
-    // this.customerService.editCustomer(customer);
+
     this.store.dispatch({
       type: '[Customers] Update Customer',
       id: customer.id,
