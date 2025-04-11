@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { VerticalBarChartComponent } from '../../components/vertical-bar-chart/vertical-bar-chart.component';
 import { InvoiceService } from '../../services/invoice-service/invoice.service';
-import { finalize, takeUntil } from 'rxjs/operators';
+// import { finalize, takeUntil } from 'rxjs/operators';
 import { Revenue } from '../../types/types';
 import { CustomerServiceService } from '../../services/customer-service/customer-service.service';
 import { Subject } from 'rxjs';
@@ -19,11 +19,11 @@ import { CommonModule } from '@angular/common';
 export class RevenueComponent {
   chartTitle = 'Revenue Chart';
   private invoiceService = inject(InvoiceService);
-  private customerService = inject(CustomerServiceService);
+  // private customerService = inject(CustomerServiceService);
   invoices$ = this.invoiceService.invoice$;
   invoiceData: Revenue[] = [];
   private destroy$ = new Subject<void>();
-  private store = inject(Store);
+  // private store = inject(Store);
 
   ngOnInit() {
     this.invoiceService.getInvoices();
