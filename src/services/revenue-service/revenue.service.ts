@@ -1,6 +1,5 @@
-import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, ReplaySubject } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, ReplaySubject } from 'rxjs';
 import { Revenue } from '../../types/types';
 
 @Injectable({
