@@ -1,6 +1,5 @@
-import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, ReplaySubject, tap } from 'rxjs';
+import { BehaviorSubject, ReplaySubject } from 'rxjs';
 import { Invoice } from '../../types/types';
 import { Store } from '@ngrx/store';
 
@@ -8,8 +7,6 @@ import { Store } from '@ngrx/store';
   providedIn: 'root',
 })
 export class InvoiceService {
-  private http = inject(HttpClient);
-  private backendUrl = 'http://localhost:3000';
   private invoiceSubject = new BehaviorSubject<Invoice[]>([]);
   invoice$ = this.invoiceSubject.asObservable();
   private latestInvoices = new ReplaySubject<Invoice[]>(1);
@@ -18,35 +15,9 @@ export class InvoiceService {
   constructor() {}
 
   getInvoices(): void {
-    // this.http
-    //   .get<Invoice[]>(`${this.backendUrl}/invoices`)
     this.store.select('invoices').subscribe((invoices: Invoice[]) => {
       this.invoiceSubject.next(invoices);
       this.latestInvoices.next(invoices.slice(-3));
     });
-  }
-
-  editInvoice(invoice: Invoice): Observable<Invoice> {
-    return this.http
-      .put<Invoice>(`${this.backendUrl}/invoices/${invoice.id}`, invoice)
-      .pipe(
-        tap(() => {
-          console.log('Invoice updated', invoice);
-          this.getInvoices();
-        })
-      );
-  }
-
-  createInvoice(invoice: Invoice): void {
-    this.http
-      .post<Invoice>(`${this.backendUrl}/invoices`, invoice)
-      .pipe(tap(() => this.getInvoices()))
-      .subscribe();
-  }
-  deleteInvoice(id: string): void {
-    this.http
-      .delete<Invoice>(`${this.backendUrl}/invoices/${id}`)
-      .pipe(tap(() => this.getInvoices()))
-      .subscribe();
   }
 }

@@ -37,9 +37,7 @@ export class EditInvoiceModalComponent {
       amount: new FormControl(this.invoice.amount, Validators.required),
       status: new FormControl(this.invoice.status),
     });
-    // this.customerService
-    //   .getCustomerById(this.invoice.customer_id)
-    //   .subscribe((customer) => (this.customerName = customer.name));
+
     this.store.select('customers').subscribe((customers) => {
       const customer = customers.find(
         (customer: Customer) => customer.id === this.invoice.customer_id
@@ -62,7 +60,7 @@ export class EditInvoiceModalComponent {
       date: this.invoice.date,
     };
     console.log(updatedInvoice);
-    // this.invoiceService.editInvoice(updatedInvoice).subscribe();
+
     this.store.dispatch({
       type: '[Invoices] Update Invoice',
       id: updatedInvoice.id,

@@ -17,7 +17,10 @@ export const routes: Routes = [
   {
     path: 'dashboard',
     component: DashboardComponent,
-    providers: [provideState({ name: 'customers', reducer: customersReducer })],
+    providers: [
+      provideState({ name: 'customers', reducer: customersReducer }),
+      provideState({ name: 'invoices', reducer: invoiceReducer }),
+    ],
   },
   {
     path: 'customers',

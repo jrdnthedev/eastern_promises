@@ -47,11 +47,7 @@ export class InvoicesComponent {
   paginatedItems$ = this.paginatedItemsSubject.asObservable();
   asc = signal(true);
   ngOnInit() {
-    // this.invoiceService.getInvoices();
     this.updatePaginatedItems();
-    this.store.select('invoices').subscribe((invoices) => {
-      console.log('invoices', invoices);
-    });
   }
 
   editInvoice(invoice: Invoice) {
@@ -100,7 +96,6 @@ export class InvoicesComponent {
     });
   }
   deleteInvoice(id: string) {
-    // this.invoiceService.deleteInvoice(id);
     this.store.dispatch({ type: '[Invoices] Delete Invoice', id: id });
     if (this.totalItems % this.itemsPerPage === 1) {
       this.currentPage = 1;
