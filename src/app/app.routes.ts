@@ -38,6 +38,10 @@ export const routes: Routes = [
   {
     path: 'revenue',
     component: RevenueComponent,
+    providers: [
+      provideState({ name: 'invoices', reducer: invoiceReducer }),
+      provideState({ name: 'customers', reducer: customersReducer }),
+    ],
   },
   {
     path: '**',
