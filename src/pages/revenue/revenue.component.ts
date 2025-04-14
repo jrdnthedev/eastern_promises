@@ -1,13 +1,10 @@
 import { Component, inject } from '@angular/core';
 import { VerticalBarChartComponent } from '../../components/vertical-bar-chart/vertical-bar-chart.component';
-import { InvoiceService } from '../../services/invoice-service/invoice.service';
-import { catchError, finalize, takeUntil } from 'rxjs/operators';
+import { catchError, takeUntil } from 'rxjs/operators';
 import { Customer, Invoice, Revenue } from '../../types/types';
-import { CustomerServiceService } from '../../services/customer-service/customer-service.service';
 import { forkJoin, Subject, take } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { CommonModule } from '@angular/common';
-import { UtilService } from '../../services/util-service/util.service';
 
 @Component({
   selector: 'app-revenue',
@@ -17,7 +14,6 @@ import { UtilService } from '../../services/util-service/util.service';
   styleUrl: './revenue.component.scss',
 })
 export class RevenueComponent {
-  chartTitle = 'Revenue Chart';
   invoiceData: Revenue[] = [];
   private destroy$ = new Subject<void>();
   private store = inject(Store);

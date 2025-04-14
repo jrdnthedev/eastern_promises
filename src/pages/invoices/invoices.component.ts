@@ -13,7 +13,7 @@ import { TableComponent } from '../../components/table/table.component';
 import { AddInvoiceModalComponent } from './components/add-invoice-modal/add-invoice-modal.component';
 import { EditInvoiceModalComponent } from './components/edit-invoice-modal/edit-invoice-modal.component';
 import { PaginationComponent } from '../../components/pagination/pagination.component';
-import { BehaviorSubject, finalize, map } from 'rxjs';
+import { BehaviorSubject, map } from 'rxjs';
 import { Store } from '@ngrx/store';
 @Component({
   selector: 'app-invoices',
@@ -23,7 +23,6 @@ import { Store } from '@ngrx/store';
   styleUrl: './invoices.component.scss',
 })
 export class InvoicesComponent {
-  private invoiceService = inject(InvoiceService);
   private store = inject(Store);
   invoices$ = this.store.select('invoices');
   @ViewChild('dynamicEditModalContainer', {
