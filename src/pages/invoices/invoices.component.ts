@@ -44,7 +44,7 @@ export class InvoicesComponent {
   totalItems = 0;
   private paginatedItemsSubject = new BehaviorSubject<Invoice[]>([]);
   paginatedItems$ = this.paginatedItemsSubject.asObservable();
-  asc = signal(true);
+  isAsc = signal(true);
   ngOnInit() {
     this.updatePaginatedItems();
   }
@@ -97,16 +97,15 @@ export class InvoicesComponent {
   }
   deleteInvoice(id: string) {
     this.store.dispatch({ type: '[Invoices] Delete Invoice', id: id });
-    if (this.totalItems % this.itemsPerPage === 1) {
-      this.currentPage = 1;
-    }
+    this.currentPage = Math.ceil(this.totalItems / this.itemsPerPage);
+    this.updatePaginatedItems();
   }
 
   sort(value: string) {
-    this.asc.update((val) => !val);
+    this.isAsc.update((val) => !val);
     const sortedItems = [...this.paginatedItemsSubject.getValue()].sort(
       (a: any, b: any) => {
-        const direction = this.asc() ? 1 : -1;
+        const direction = this.isAsc() ? 1 : -1;
         return a[value] > b[value] ? direction : -direction;
       }
     );
