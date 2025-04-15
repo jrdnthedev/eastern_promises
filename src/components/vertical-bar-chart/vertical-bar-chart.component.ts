@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NgxChartsModule, Color, ScaleType } from '@swimlane/ngx-charts';
 import { Revenue } from '../../types/types';
 
@@ -6,7 +6,6 @@ import { Revenue } from '../../types/types';
   selector: 'app-vertical-bar-chart',
   imports: [NgxChartsModule],
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './vertical-bar-chart.component.html',
   styleUrl: './vertical-bar-chart.component.scss',
 })
