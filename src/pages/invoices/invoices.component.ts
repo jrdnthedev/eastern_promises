@@ -13,7 +13,7 @@ import { TableComponent } from '../../components/table/table.component';
 import { AddInvoiceModalComponent } from './components/add-invoice-modal/add-invoice-modal.component';
 import { EditInvoiceModalComponent } from './components/edit-invoice-modal/edit-invoice-modal.component';
 import { PaginationComponent } from '../../components/pagination/pagination.component';
-import { BehaviorSubject, map } from 'rxjs';
+import { BehaviorSubject, catchError, map } from 'rxjs';
 import { Store } from '@ngrx/store';
 @Component({
   selector: 'app-invoices',
@@ -68,6 +68,7 @@ export class InvoicesComponent {
   updatePaginatedItems() {
     this.invoices$
       .pipe(
+        catchError((error) => error),
         map((items) => {
           const startIndex = (this.currentPage - 1) * this.itemsPerPage;
           const endIndex = startIndex + this.itemsPerPage;
