@@ -6,7 +6,6 @@ import {
   ViewChild,
   ViewContainerRef,
 } from '@angular/core';
-import { InvoiceService } from '../../services/invoice-service/invoice.service';
 import { Invoice } from '../../types/types';
 import { CommonModule } from '@angular/common';
 import { TableComponent } from '../../components/table/table.component';
