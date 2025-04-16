@@ -1,6 +1,5 @@
 import { Component, EventEmitter, inject, Output } from '@angular/core';
 import {
-  Form,
   FormControl,
   FormGroup,
   FormsModule,

@@ -59,7 +59,6 @@ export class EditInvoiceModalComponent {
       id: this.invoice.id,
       date: this.invoice.date,
     };
-    console.log(updatedInvoice);
 
     this.store.dispatch({
       type: '[Invoices] Update Invoice',

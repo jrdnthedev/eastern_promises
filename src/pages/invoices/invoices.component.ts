@@ -84,7 +84,7 @@ export class InvoicesComponent {
     this.addcomponentRef = this.addInvoiceModalContainer.createComponent(
       AddInvoiceModalComponent
     );
-    this.invoices$.subscribe((item) => {
+    this.invoices$.subscribe((item: Invoice[]) => {
       this.addcomponentRef
         ? (this.addcomponentRef.instance.invoices = item)
         : null;

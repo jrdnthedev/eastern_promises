@@ -60,7 +60,6 @@ export class AddInvoiceModalComponent {
   }
 
   closeModal() {
-    console.log('Close modal');
     this.destroy.emit();
   }
 }
