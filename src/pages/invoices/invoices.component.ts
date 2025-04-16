@@ -68,14 +68,14 @@ export class InvoicesComponent {
     this.invoices$
       .pipe(
         catchError((error) => error),
-        map((items) => {
+        map((items: Invoice[]) => {
           const startIndex = (this.currentPage - 1) * this.itemsPerPage;
           const endIndex = startIndex + this.itemsPerPage;
           this.totalItems = items.length;
           return items.slice(startIndex, endIndex);
         })
       )
-      .subscribe((paginatedItems) => {
+      .subscribe((paginatedItems: Invoice[]) => {
         this.paginatedItemsSubject.next(paginatedItems);
       });
   }
@@ -101,11 +101,17 @@ export class InvoicesComponent {
   }
 
   sort(value: string) {
-    this.isAsc.update((val) => !val);
+    this.isAsc.update((val: boolean) => !val);
     const sortedItems = [...this.paginatedItemsSubject.getValue()].sort(
-      (a: any, b: any) => {
+      (a: Invoice, b: Invoice) => {
+        if (!(value in a)) {
+          throw new Error(`Invalid property: ${value}`);
+        }
+
         const direction = this.isAsc() ? 1 : -1;
-        return a[value] > b[value] ? direction : -direction;
+        return a[value as keyof Invoice] > b[value as keyof Invoice]
+          ? direction
+          : -direction;
       }
     );
     this.paginatedItemsSubject.next(sortedItems);
