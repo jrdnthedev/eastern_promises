@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { VerticalBarChartComponent } from '../../components/vertical-bar-chart/vertical-bar-chart.component';
 import { catchError, takeUntil } from 'rxjs/operators';
 import { Customer, Invoice, Revenue } from '../../types/types';
-import { forkJoin, Subject, take } from 'rxjs';
+import { forkJoin, Observable, Subject, take } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { CommonModule } from '@angular/common';
 
@@ -22,8 +22,12 @@ export class RevenueComponent {
     this.createRevenueData();
   }
   createRevenueData() {
-    const customers$ = this.store.select('customers').pipe(take(1));
-    const invoices$ = this.store.select('invoices').pipe(take(1));
+    const customers$: Observable<Customer[]> = this.store
+      .select('customers')
+      .pipe(take(1));
+    const invoices$: Observable<Invoice[]> = this.store
+      .select('invoices')
+      .pipe(take(1));
     const mergedList = forkJoin({
       customers: customers$,
       invoices: invoices$,
