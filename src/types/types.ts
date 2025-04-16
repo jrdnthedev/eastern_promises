@@ -24,4 +24,9 @@ export type InvoiceName = {
   extra: { code: string };
 };
 
+export type ChartData = {
+  customers: Customer[];
+  invoices: Invoice[];
+};
+
 export type InvoiceStatus = 'paid' | 'pending' | 'draft';

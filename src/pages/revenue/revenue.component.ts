@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { VerticalBarChartComponent } from '../../components/vertical-bar-chart/vertical-bar-chart.component';
 import { catchError, takeUntil } from 'rxjs/operators';
-import { Customer, Invoice, Revenue } from '../../types/types';
+import { ChartData, Customer, Invoice, Revenue } from '../../types/types';
 import { forkJoin, Observable, Subject, take } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { CommonModule } from '@angular/common';
@@ -38,9 +38,9 @@ export class RevenueComponent {
         catchError((_, caught) => caught),
         takeUntil(this.destroy$)
       )
-      .subscribe((result) => {
-        const customers = result.customers;
-        const invoices = result.invoices;
+      .subscribe((data: ChartData) => {
+        const customers = data.customers;
+        const invoices = data.invoices;
         this.invoiceData = this.getRevenueData(customers, invoices);
       });
   }
@@ -48,7 +48,7 @@ export class RevenueComponent {
   getRevenueData(customers: Customer[], invoices: Invoice[]): Revenue[] {
     return customers.map((customer: Customer) => {
       const customerInvoices = invoices.filter(
-        (inv) => inv.customer_id === customer.id
+        (inv: Invoice) => inv.customer_id === customer.id
       );
 
       const series = customerInvoices.map((invoice: Invoice) => {
