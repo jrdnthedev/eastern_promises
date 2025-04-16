@@ -46,12 +46,12 @@ export class RevenueComponent {
   }
 
   getRevenueData(customers: Customer[], invoices: Invoice[]): Revenue[] {
-    return customers.map((customer) => {
+    return customers.map((customer: Customer) => {
       const customerInvoices = invoices.filter(
         (inv) => inv.customer_id === customer.id
       );
 
-      const series = customerInvoices.map((invoice) => {
+      const series = customerInvoices.map((invoice: Invoice) => {
         const date = new Date(invoice.date);
         const year = date.getFullYear().toString().padStart(4, '0');
         return {
