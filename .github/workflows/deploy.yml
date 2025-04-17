@@ -31,3 +31,4 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./dist/dashboard/browser  # adjust for your Angular output path
+          server-dir: /public_html
