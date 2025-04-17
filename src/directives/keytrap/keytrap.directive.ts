@@ -4,9 +4,12 @@ import { Directive } from '@angular/core';
   selector: '[appKeytrap]',
 })
 export class KeytrapDirective {
+  private previouslyFocusedElement: HTMLElement | null = null;
+
   constructor() {}
 
   ngOnInit() {
+    this.previouslyFocusedElement = document.activeElement as HTMLElement;
     this.initializeKeytrap();
   }
 
@@ -61,5 +64,11 @@ export class KeytrapDirective {
     const previousIndex =
       (currentIndex - 1 + elements.length) % elements.length;
     return elements[previousIndex] || null;
+  }
+
+  ngOnDestroy() {
+    if (this.previouslyFocusedElement) {
+      this.previouslyFocusedElement.focus();
+    }
   }
 }
