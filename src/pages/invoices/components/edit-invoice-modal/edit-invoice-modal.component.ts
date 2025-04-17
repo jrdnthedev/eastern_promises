@@ -10,10 +10,11 @@ import {
 import { InvoiceService } from '../../../../services/invoice-service/invoice.service';
 import { CustomerServiceService } from '../../../../services/customer-service/customer-service.service';
 import { Store } from '@ngrx/store';
+import { KeytrapDirective } from '../../../../directives/keytrap/keytrap.directive';
 
 @Component({
   selector: 'app-edit-invoice-modal',
-  imports: [FormsModule, ReactiveFormsModule],
+  imports: [FormsModule, ReactiveFormsModule, KeytrapDirective],
   standalone: true,
   templateUrl: './edit-invoice-modal.component.html',
   styleUrl: './edit-invoice-modal.component.scss',

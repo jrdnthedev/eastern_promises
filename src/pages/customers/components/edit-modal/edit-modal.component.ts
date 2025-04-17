@@ -9,10 +9,11 @@ import {
 } from '@angular/forms';
 import { Customer } from '../../../../types/types';
 import { Store } from '@ngrx/store';
+import { KeytrapDirective } from '../../../../directives/keytrap/keytrap.directive';
 
 @Component({
   selector: 'app-edit-modal',
-  imports: [FormsModule, ReactiveFormsModule],
+  imports: [FormsModule, ReactiveFormsModule, KeytrapDirective],
   standalone: true,
   templateUrl: './edit-modal.component.html',
   styleUrl: './edit-modal.component.scss',

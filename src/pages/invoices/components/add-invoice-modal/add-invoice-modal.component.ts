@@ -11,10 +11,11 @@ import { UtilService } from '../../../../services/util-service/util.service';
 import { CustomerServiceService } from '../../../../services/customer-service/customer-service.service';
 import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
+import { KeytrapDirective } from '../../../../directives/keytrap/keytrap.directive';
 
 @Component({
   selector: 'app-add-invoice-modal',
-  imports: [FormsModule, ReactiveFormsModule, CommonModule],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, KeytrapDirective],
   standalone: true,
   templateUrl: './add-invoice-modal.component.html',
   styleUrl: './add-invoice-modal.component.scss',
