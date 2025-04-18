@@ -27,7 +27,8 @@ jobs:
       - name: Upload via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
-          server: ${{ secrets.FTP_HOST }}
+          server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./dist/dashboard  # adjust for your Angular output path
+          local-dir: ./dist/dashboard/browser  # adjust for your Angular output path
+          server-dir: /public_html/eastern.jrdndevs.com
