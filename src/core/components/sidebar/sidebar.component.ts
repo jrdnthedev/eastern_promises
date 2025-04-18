@@ -37,7 +37,6 @@ export class SidebarComponent {
         !this.asideBtnDiv.nativeElement.contains(event.target) &&
         !this.asideDiv.nativeElement.contains(event.target)
       ) {
-        console.log('Click occurred outside the target div!');
         this.isHidden = true;
       }
     }
