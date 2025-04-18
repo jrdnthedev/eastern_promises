@@ -63,11 +63,7 @@ export class EditInvoiceModalComponent {
 
     this.store.dispatch({
       type: '[Invoices] Update Invoice',
-      id: updatedInvoice.id,
-      amount: updatedInvoice.amount,
-      status: updatedInvoice.status,
-      date: updatedInvoice.date,
-      customer_id: updatedInvoice.customer_id,
+      ...updatedInvoice,
     });
     this.closeModal();
   }

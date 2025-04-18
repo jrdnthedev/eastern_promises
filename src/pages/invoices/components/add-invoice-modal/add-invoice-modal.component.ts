@@ -50,11 +50,7 @@ export class AddInvoiceModalComponent {
       };
       this.store.dispatch({
         type: '[Invoices] Add Invoice',
-        id: invoice.id,
-        date: invoice.date,
-        amount: invoice.amount,
-        status: invoice.status,
-        customer_id: invoice.customer_id,
+        ...invoice,
       });
       this.destroy.emit();
     }

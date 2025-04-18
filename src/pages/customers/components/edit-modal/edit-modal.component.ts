@@ -46,10 +46,7 @@ export class EditModalComponent {
 
     this.store.dispatch({
       type: '[Customers] Update Customer',
-      id: customer.id,
-      name: customer.name,
-      email: customer.email,
-      image_url: customer.image_url,
+      ...customer,
     });
     this.closeModal();
   }

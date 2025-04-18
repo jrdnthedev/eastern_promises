@@ -43,10 +43,7 @@ export class AddModalComponent {
       };
       this.store.dispatch({
         type: '[Customers] Add Customer',
-        id: customer.id,
-        name: customer.name,
-        email: customer.email,
-        image_url: customer.image_url,
+        ...customer,
       });
       this.destroy.emit();
     }
