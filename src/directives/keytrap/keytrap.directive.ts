@@ -8,7 +8,7 @@ export class KeytrapDirective {
 
   constructor() {}
 
-  ngOnInit() {
+  ngAfterViewInit() {
     this.previouslyFocusedElement = document.activeElement as HTMLElement;
     this.initializeKeytrap();
   }
